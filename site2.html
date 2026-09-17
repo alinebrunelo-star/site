@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maré Serena | Acessórios Praianos</title>
+
+  <!-- Biblioteca para gerar QR Code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --azul: #93d9e8;
+      --azul-escuro: #267c91;
+      --azul-claro: #e9fafd;
+      --amarelo: #fff0a8;
+      --areia: #fff8df;
+      --coral: #f5aa9d;
+      --texto: #31515a;
+      --branco: #fff;
+      --vermelho: #df7777;
+      --sombra: 0 8px 25px rgba(48, 112, 128, .15);
+      --raio: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      color: var(--texto);
+      background: linear-gradient(180deg, #f7ffff, var(--areia));
+      min-height: 100vh;
+    }
+
+    header {
+      background: rgba(255, 255, 255, .96);
+      box-shadow: var(--sombra);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .topo {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      color: var(--azul-escuro);
+      font-size: 1.65rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .logo span {
+      color: var(--coral);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button,
+    .botao {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 17px;
+      cursor: pointer;
+      font-weight: bold;
+      color: var(--texto);
+      background: var(--amarelo);
+      transition: .2s;
+    }
+
+    button:hover,
+    .botao:hover {
+      transform: translateY(-2px);
+      filter: brightness(.97);
+    }
+
+    .botao-principal {
+      background: var(--azul-escuro);
+      color: white;
+    }
+
+    .botao-coral {
+      background: var(--coral);
+      color: white;
+    }
+
+    .botao-perigo {
+      background: var(--vermelho);
+      color: white;
+    }
+
+    .contador {
+      background: var(--coral);
+      color: white;
+      padding: 2px 7px;
+      border-radius: 20px;
+      font-size: .75rem;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 28px 20px 70px;
+    }
+
+    .secao {
+      display: none;
+    }
+
+    .secao.ativa {
+      display: block;
+    }
+
+    .hero {
+      min-height: 380px;
+      border-radius: 28px;
+      padding: 55px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.25)),
+        url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80")
+        center/cover;
+      box-shadow: var(--sombra);
+    }
+
+    .hero-conteudo {
+      max-width: 530px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      color: var(--azul-escuro);
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      color: var(--azul-escuro);
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin: 8px 0;
+    }
+
+    p {
+      line-height: 1.6;
+      margin-bottom: 13px;
+    }
+
+    .titulo-secao {
+      margin: 38px 0 20px;
+      text-align: center;
+    }
+
+    .filtros {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #c8e8ec;
+      border-radius: 12px;
+      background: white;
+      color: var(--texto);
+      outline: none;
+      margin-top: 6px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--azul-escuro);
+      box-shadow: 0 0 0 3px rgba(38, 124, 145, .12);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 13px;
+      font-weight: bold;
+      font-size: .93rem;
+    }
+
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 22px;
+    }
+
+    .produto {
+      background: white;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .produto img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .produto-conteudo {
+      padding: 17px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .produto-conteudo .botao {
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .preco {
+      color: var(--azul-escuro);
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+
+    .opcoes-produto {
+      margin: 10px 0;
+    }
+
+    .opcoes-produto label {
+      font-size: .82rem;
+      margin-bottom: 8px;
+    }
+
+    .cartao {
+      background: rgba(255,255,255,.94);
+      padding: 25px;
+      border-radius: var(--raio);
+      box-shadow: var(--sombra);
+      margin-bottom: 22px;
+    }
+
+    .duas-colunas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .tres-colunas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .carrinho-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 0;
+      border-bottom: 1px solid #e2f1f1;
+    }
+
+    .carrinho-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .carrinho-info {
+      flex: 1;
+    }
+
+    .quantidade {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quantidade button {
+      padding: 5px 10px;
+      background: var(--azul-claro);
+    }
+
+    .resumo {
+      background: var(--azul-claro);
+      padding: 18px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    .linha-resumo {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 9px 0;
+    }
+
+    .total {
+      border-top: 1px solid #addbe1;
+      padding-top: 12px;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .metodo-pagamento {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+
+    .metodo-pagamento label {
+      cursor: pointer;
+      background: var(--areia);
+      border-radius: 12px;
+      padding: 12px;
+      flex: 1;
+      min-width: 130px;
+    }
+
+    .metodo-pagamento input {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    .mensagem {
+      background: #fff3cd;
+      color: #795c00;
+      padding: 13px;
+      border-radius: 12px;
+      margin: 12px 0;
+      display: none;
+    }
+
+    .sucesso {
+      background: #d9f7df;
+      color: #287039;
+    }
+
+    .pedido {
+      background: var(--azul-claro);
+      padding: 17px;
+      border-radius: 14px;
+      margin: 12px 0;
+    }
+
+    .barra-rastreio {
+      height: 10px;
+      background: #c8e8ec;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .barra-rastreio div {
+      width: 65%;
+      height: 100%;
+      background: var(--azul-escuro);
+    }
+
+    .admin-produto {
+      display: grid;
+      grid-template-columns: 90px 1fr 1fr;
+      gap: 10px;
+      align-items: center;
+      border-bottom: 1px solid #dceeee;
+      padding: 14px 0;
+    }
+
+    .admin-produto img {
+      width: 85px;
+      height: 75px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .pix-box {
+      text-align: center;
+      padding: 20px;
+      background: #f3ffff;
+      border-radius: 15px;
+      margin: 15px 0;
+    }
+
+    #qrcode {
+      display: flex;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .pix-copia-cola {
+      font-size: .8rem;
+      word-break: break-all;
+      background: white;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: left;
+      margin: 10px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: var(--azul-claro);
+      margin-top: 30px;
+    }
+
+    @media (max-width: 760px) {
+      .topo {
+        flex-direction: column;
+      }
+
+      .hero {
+        padding: 30px 22px;
+      }
+
+      .duas-colunas,
+      .tres-colunas {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-produto {
+        grid-template-columns: 75px 1fr;
+      }
+
+      .admin-produto img {
+        width: 70px;
+      }
+
+      .admin-produto input,
+      .admin-produto textarea,
+      .admin-produto button {
+        grid-column: span 2;
+      }
+
+      .carrinho-item {
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="topo">
+    <div class="logo" onclick="mostrarSecao('inicio')">
+      Maré <span>Serena</span> 🌊
+    </div>
+
+    <nav>
+      <button onclick="mostrarSecao('inicio')">Início</button>
+      <button onclick="mostrarSecao('loja')">Loja</button>
+      <button onclick="mostrarSecao('carrinho')">
+        Carrinho <span id="contadorCarrinho" class="contador">0</span>
+      </button>
+      <button onclick="mostrarSecao('perfil')">Meu perfil</button>
+      <button onclick="mostrarSecao('login')" id="botaoLogin">Entrar</button>
+      <button onclick="mostrarSecao('admin')">Administração</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section id="inicio" class="secao ativa">
+    <div class="hero">
+      <div class="hero-conteudo">
+        <h1>Leve a praia com você</h1>
+        <p>
+          Acessórios leves, coloridos e feitos para combinar com dias de sol,
+          areia e mar.
+        </p>
+        <button class="botao-principal" onclick="mostrarSecao('loja')">
+          Ver produtos
+        </button>
+      </div>
+    </div>
+
+    <div class="titulo-secao">
+      <h2>Todos os nossos produtos</h2>
+      <p>Confira todas as novidades da Maré Serena.</p>
+    </div>
+
+    <!-- Todos os produtos aparecem aqui -->
+    <div id="produtosInicio" class="produtos"></div>
+  </section>
+
+  <section id="loja" class="secao">
+    <div class="titulo-secao">
+      <h2>Nossa loja</h2>
+      <p>Escolha seus produtos e personalize suas opções.</p>
+    </div>
+
+    <div class="filtros">
+      <input
+        id="buscaProduto"
+        type="search"
+        placeholder="Buscar produto..."
+        oninput="renderProdutos()"
+      >
+
+      <select id="filtroCategoria" onchange="renderProdutos()">
+        <option value="">Todas as categorias</option>
+        <option value="Chapéus">Chapéus</option>
+        <option value="Bolsas">Bolsas</option>
+        <option value="Bijuterias">Bijuterias</option>
+        <option value="Óculos">Óculos</option>
+        <option value="Outros">Outros</option>
+      </select>
+    </div>
+
+    <div id="listaProdutos" class="produtos"></div>
+  </section>
+
+  <section id="carrinho" class="secao">
+    <h2>Meu carrinho</h2>
+
+    <div class="cartao">
+      <div id="itensCarrinho"></div>
+      <div id="resumoCarrinho"></div>
+    </div>
+
+    <button class="botao-principal" onclick="irParaCheckout()">
+      Continuar para pagamento
+    </button>
+  </section>
+
+  <section id="checkout" class="secao">
+    <h2>Pagamento e entrega</h2>
+
+    <div id="mensagemCheckout" class="mensagem"></div>
+
+    <div class="duas-colunas">
+      <div class="cartao">
+        <h3>Dados de entrega</h3>
+
+        <div class="tres-colunas">
+          <label>
+            CEP
+            <input id="cep" placeholder="00000-000" maxlength="9">
+          </label>
+
+          <label>
+            Número
+            <input id="numero" placeholder="123">
+          </label>
+
+          <label>
+            Complemento
+            <input id="complemento" placeholder="Apartamento, casa...">
+          </label>
+        </div>
+
+        <label>
+          Nome completo
+          <input id="nomeEntrega" placeholder="Digite seu nome">
+        </label>
+
+        <label>
+          Rua
+          <input id="rua" placeholder="Rua, avenida...">
+        </label>
+
+        <div class="tres-colunas">
+          <label>
+            Bairro
+            <input id="bairro" placeholder="Bairro">
+          </label>
+
+          <label>
+            Cidade
+            <input id="cidade" placeholder="Cidade">
+          </label>
+
+          <label>
+            Estado
+            <input id="estado" placeholder="UF">
+          </label>
+        </div>
+
+        <p id="informacaoFrete">
+          Digite seu CEP para calcular o frete.
+        </p>
+      </div>
+
+      <div class="cartao">
+        <h3>Forma de pagamento</h3>
+
+        <div class="metodo-pagamento">
+          <label>
+            <input
+              type="radio"
+              name="pagamento"
+              value="pix"
+              checked
+              onchange="mostrarCamposPagamento()"
+            >
+            Pix
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="pagamento"
+              value="credito"
+              onchange="mostrarCamposPagamento()"
+            >
+            Cartão de crédito
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              name="pagamento"
+              value="debito"
+              onchange="mostrarCamposPagamento()"
+            >
+            Cartão de débito
+          </label>
+        </div>
+
+        <div id="areaPix" class="pix-box">
+          <h3>Pagamento via Pix</h3>
+          <p>O QR Code será gerado com o valor total do pedido.</p>
+
+          <div id="qrcode"></div>
+
+          <div id="codigoPix" class="pix-copia-cola">
+            Preencha o endereço para gerar o código Pix.
+          </div>
+
+          <button class="botao-coral" onclick="copiarPix()">
+            Copiar código Pix
+          </button>
+
+          <p style="margin-top:12px;">
+            Depois de pagar, clique em “Finalizar pedido”.
+          </p>
+        </div>
+
+        <div id="camposCartao" style="display:none;">
+          <label>
+            Nome no cartão
+            <input id="nomeCartao" placeholder="Nome impresso no cartão">
+          </label>
+
+          <label>
+            Número do cartão
+            <input
+              id="numeroCartao"
+              placeholder="0000 0000 0000 0000"
+              maxlength="19"
+            >
+          </label>
+
+          <div class="tres-colunas">
+            <label>
+              Validade
+              <input id="validadeCartao" placeholder="MM/AA">
+            </label>
+
+            <label>
+              CVV
+              <input id="cvvCartao" placeholder="123" maxlength="4">
+            </label>
+
+            <label>
+              Parcelas
+              <select id="parcelas">
+                <option>1x sem juros</option>
+                <option>2x sem juros</option>
+                <option>3x sem juros</option>
+                <option>6x com juros</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div id="resumoCheckout" class="resumo"></div>
+
+        <button class="botao-principal" onclick="finalizarCompra()">
+          Finalizar pedido
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="cadastro" class="secao">
+    <div class="cartao" style="max-width:600px;margin:auto;">
+      <h2>Criar cadastro</h2>
+
+      <div id="mensagemCadastro" class="mensagem"></div>
+
+      <label>
+        Nome completo
+        <input id="cadastroNome" placeholder="Seu nome">
+      </label>
+
+      <label>
+        E-mail
+        <input id="cadastroEmail" type="email" placeholder="seu@email.com">
+      </label>
+
+      <label>
+        Telefone
+        <input id="cadastroTelefone" placeholder="(00) 00000-0000">
+      </label>
+
+      <label>
+        Senha
+        <input id="cadastroSenha" type="password" placeholder="Crie uma senha">
+      </label>
+
+      <button class="botao-principal" onclick="cadastrarUsuario()">
+        Criar conta
+      </button>
+
+      <p style="margin-top:15px;">
+        Já possui uma conta?
+        <button onclick="mostrarSecao('login')">Entrar</button>
+      </p>
+    </div>
+  </section>
+
+  <section id="login" class="secao">
+    <div class="cartao" style="max-width:600px;margin:auto;">
+      <h2>Entrar na conta</h2>
+
+      <div id="mensagemLogin" class="mensagem"></div>
+
+      <label>
+        E-mail
+        <input id="loginEmail" type="email" placeholder="seu@email.com">
+      </label>
+
+      <label>
+        Senha
+        <input id="loginSenha" type="password" placeholder="Sua senha">
+      </label>
+
+      <button class="botao-principal" onclick="loginUsuario()">
+        Entrar
+      </button>
+
+      <p style="margin-top:15px;">
+        Ainda não possui cadastro?
+        <button onclick="mostrarSecao('cadastro')">Criar conta</button>
+      </p>
+    </div>
+  </section>
+
+  <section id="perfil" class="secao">
+    <h2>Meu perfil</h2>
+    <div id="conteudoPerfil"></div>
+  </section>
+
+  <section id="admin" class="secao">
+    <div id="loginAdmin" class="cartao" style="max-width:500px;margin:auto;">
+      <h2>Área administrativa</h2>
+      <p>Área exclusiva para editar e cadastrar produtos.</p>
+
+      <label>
+        Senha administrativa
+        <input id="senhaAdmin" type="password" placeholder="Digite a senha">
+      </label>
+
+      <button class="botao-principal" onclick="entrarAdmin()">
+        Acessar administração
+      </button>
+
+      <div id="mensagemAdmin" class="mensagem"></div>
+    </div>
+
+    <div id="painelAdmin" class="cartao" style="display:none;">
+      <h2>Adicionar produto</h2>
+
+      <div class="duas-colunas">
+        <label>
+          Nome do produto
+          <input id="novoNome" placeholder="Ex.: Bolsa de palha">
+        </label>
+
+        <label>
+          Categoria
+          <select id="novaCategoria">
+            <option>Chapéus</option>
+            <option>Bolsas</option>
+            <option>Bijuterias</option>
+            <option>Óculos</option>
+            <option>Outros</option>
+          </select>
+        </label>
+
+        <label>
+          Preço
+          <input id="novoPreco" type="number" step="0.01" placeholder="59.90">
+        </label>
+
+        <label>
+          Link da imagem
+          <input id="novaImagem" placeholder="https://...">
+        </label>
+
+        <label>
+          Cores disponíveis
+          <input
+            id="novasCores"
+            placeholder="Azul, Amarelo, Rosa"
+          >
+        </label>
+
+        <label>
+          Modelos disponíveis
+          <input
+            id="novosModelos"
+            placeholder="Tradicional, Grande, Pequeno"
+          >
+        </label>
+      </div>
+
+      <label>
+        Descrição
+        <textarea id="novaDescricao" placeholder="Descrição do produto"></textarea>
+      </label>
+
+      <button class="botao-principal" onclick="adicionarProduto()">
+        Adicionar produto
+      </button>
+
+      <hr style="margin:25px 0;border:0;border-top:1px solid #d8eeee">
+
+      <h2>Produtos cadastrados</h2>
+      <div id="listaAdmin"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Maré Serena © 2026 — Acessórios para dias ensolarados 🌴</p>
+</footer>
+
+<script>
+  const produtosPadrao = [
+    {
+      id: 1,
+      nome: "Chapéu de palha natural",
+      categoria: "Chapéus",
+      preco: 79.90,
+      imagem: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80",
+      descricao: "Chapéu leve e confortável para proteger você do sol.",
+      cores: ["Natural", "Bege", "Branco"],
+      modelos: ["Tradicional", "Com faixa", "Grande"]
+    },
+    {
+      id: 2,
+      nome: "Bolsa de praia colorida",
+      categoria: "Bolsas",
+      preco: 99.90,
+      imagem: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
+      descricao: "Bolsa espaçosa para levar tudo o que você precisa.",
+      cores: ["Azul", "Amarelo", "Rosa"],
+      modelos: ["Pequena", "Média", "Grande"]
+    },
+    {
+      id: 3,
+      nome: "Colar conchas do mar",
+      categoria: "Bijuterias",
+      preco: 39.90,
+      imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80",
+      descricao: "Colar delicado com inspiração nas conchas do oceano.",
+      cores: ["Dourado", "Prateado", "Rose"],
+      modelos: ["Conchas pequenas", "Conchas grandes"]
+    },
+    {
+      id: 4,
+      nome: "Óculos solar pastel",
+      categoria: "Óculos",
+      preco: 69.90,
+      imagem: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+      descricao: "Óculos moderno com armação em tom pastel.",
+      cores: ["Azul", "Amarelo", "Lilás"],
+      modelos: ["Redondo", "Quadrado", "Vintage"]
+    }
+  ];
+
+  let produtos = JSON.parse(localStorage.getItem("produtos")) || produtosPadrao;
+  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+  let usuarioAtual = JSON.parse(localStorage.getItem("usuarioAtual")) || null;
+  let frete = 0;
+  let codigoPixAtual = "";
+
+  function salvarDados() {
+    localStorage.setItem("produtos", JSON.stringify(produtos));
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    localStorage.setItem("usuarioAtual", JSON.stringify(usuarioAtual));
+  }
+
+  function dinheiro(valor) {
+    return valor.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    });
+  }
+
+  function listaOpcoes(array) {
+    if (!array || array.length === 0) {
+      return "<option value='Único'>Único</option>";
+    }
+
+    return array.map(opcao =>
+      `<option value="${opcao}">${opcao}</option>`
+    ).join("");
+  }
+
+  function opcoesProdutoHTML(produto) {
+    const temCores = produto.cores && produto.cores.length > 0;
+    const temModelos = produto.modelos && produto.modelos.length > 0;
+
+    if (!temCores && !temModelos) return "";
+
+    return `
+      <div class="opcoes-produto">
+        ${
+          temCores
+          ? `
+            <label>
+              Cor:
+              <select id="cor-${produto.id}">
+                ${listaOpcoes(produto.cores)}
+              </select>
+            </label>
+          `
+          : ""
+        }
+
+        ${
+          temModelos
+          ? `
+            <label>
+              Modelo:
+              <select id="modelo-${produto.id}">
+                ${listaOpcoes(produto.modelos)}
+              </select>
+            </label>
+          `
+          : ""
+        }
+      </div>
+    `;
+  }
+
+  function mostrarSecao(id) {
+    document.querySelectorAll(".secao").forEach(secao => {
+      secao.classList.remove("ativa");
+    });
+
+    document.getElementById(id).classList.add("ativa");
+
+    if (id === "inicio") renderInicio();
+    if (id === "loja") renderProdutos();
+    if (id === "carrinho") renderCarrinho();
+    if (id === "checkout") renderCheckout();
+    if (id === "perfil") renderPerfil();
+    if (id === "admin") renderAdmin();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function cardProduto(produto) {
+    return `
+      <article class="produto">
+        <img src="${produto.imagem}" alt="${produto.nome}">
+
+        <div class="produto-conteudo">
+          <small>${produto.categoria}</small>
+          <h3>${produto.nome}</h3>
+          <p>${produto.descricao}</p>
+
+          <div class="preco">${dinheiro(produto.preco)}</div>
+
+          ${opcoesProdutoHTML(produto)}
+
+          <button
+            class="botao-coral"
+            onclick="adicionarCarrinho(${produto.id})"
+          >
+            Adicionar ao carrinho
+          </button>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderInicio() {
+    document.getElementById("produtosInicio").innerHTML =
+      produtos.length
+      ? produtos.map(cardProduto).join("")
+      : "<p>Nenhum produto cadastrado ainda.</p>";
+  }
+
+  function renderProdutos() {
+    const busca =
+      document.getElementById("buscaProduto")?.value.toLowerCase() || "";
+
+    const categoria =
+      document.getElementById("filtroCategoria")?.value || "";
+
+    const filtrados = produtos.filter(produto => {
+      const correspondeBusca =
+        produto.nome.toLowerCase().includes(busca) ||
+        produto.descricao.toLowerCase().includes(busca);
+
+      const correspondeCategoria =
+        !categoria || produto.categoria === categoria;
+
+      return correspondeBusca && correspondeCategoria;
+    });
+
+    document.getElementById("listaProdutos").innerHTML =
+      filtrados.length
+      ? filtrados.map(cardProduto).join("")
+      : "<p>Nenhum produto encontrado.</p>";
+  }
+
+  function adicionarCarrinho(id) {
+    const produto = produtos.find(produto => produto.id === id);
+
+    const cor =
+      document.getElementById(`cor-${id}`)?.value || "Única";
+
+    const modelo =
+      document.getElementById(`modelo-${id}`)?.value || "Único";
+
+    const itemExistente = carrinho.find(item =>
+      item.id === id &&
+      item.cor === cor &&
+      item.modelo === modelo
+    );
+
+    if (itemExistente) {
+      itemExistente.quantidade++;
+    } else {
+      carrinho.push({
+        id,
+        cor,
+        modelo,
+        quantidade: 1
+      });
+    }
+
+    salvarDados();
+    atualizarContador();
+
+    alert(
+      `${produto.nome} adicionado ao carrinho.\nCor: ${cor}\nModelo: ${modelo}`
+    );
+  }
+
+  function atualizarContador() {
+    const quantidade = carrinho.reduce(
+      (total, item) => total + item.quantidade,
+      0
+    );
+
+    document.getElementById("contadorCarrinho").textContent = quantidade;
+  }
+
+  function valorProdutos() {
+    return carrinho.reduce((total, item) => {
+      const produto = produtos.find(produto => produto.id === item.id);
+      return total + produto.preco * item.quantidade;
+    }, 0);
+  }
+
+  function renderCarrinho() {
+    const container = document.getElementById("itensCarrinho");
+
+    if (carrinho.length === 0) {
+      container.innerHTML = "<p>Seu carrinho está vazio.</p>";
+      document.getElementById("resumoCarrinho").innerHTML = "";
+      return;
+    }
+
+    container.innerHTML = carrinho.map((item, indice) => {
+      const produto = produtos.find(produto => produto.id === item.id);
+
+      return `
+        <div class="carrinho-item">
+          <img src="${produto.imagem}" alt="${produto.nome}">
+
+          <div class="carrinho-info">
+            <h3>${produto.nome}</h3>
+            <p>Cor: ${item.cor}</p>
+            <p>Modelo: ${item.modelo}</p>
+            <p>${dinheiro(produto.preco)}</p>
+          </div>
+
+          <div class="quantidade">
+            <button onclick="alterarQuantidade(${indice}, -1)">−</button>
+            <span>${item.quantidade}</span>
+            <button onclick="alterarQuantidade(${indice}, 1)">+</button>
+          </div>
+
+          <button
+            class="botao-perigo"
+            onclick="removerCarrinho(${indice})"
+          >
+            Remover
+          </button>
+        </div>
+      `;
+    }).join("");
+
+    document.getElementById("resumoCarrinho").innerHTML = `
+      <div class="resumo">
+        <div class="linha-resumo">
+          <span>Subtotal</span>
+          <strong>${dinheiro(valorProdutos())}</strong>
+        </div>
+
+        <div class="linha-resumo">
+          <span>Frete</span>
+          <strong>A calcular</strong>
+        </div>
+      </div>
+    `;
+  }
+
+  function alterarQuantidade(indice, valor) {
+    carrinho[indice].quantidade += valor;
+
+    if (carrinho[indice].quantidade <= 0) {
+      carrinho.splice(indice, 1);
+    }
+
+    salvarDados();
+    atualizarContador();
+    renderCarrinho();
+  }
+
+  function removerCarrinho(indice) {
+    carrinho.splice(indice, 1);
+    salvarDados();
+    atualizarContador();
+    renderCarrinho();
+  }
+
+  function irParaCheckout() {
+    if (carrinho.length === 0) {
+      alert("Adicione algum produto ao carrinho antes de continuar.");
+      return;
+    }
+
+    if (!usuarioAtual) {
+      alert("Faça login ou crie uma conta para continuar.");
+      mostrarSecao("login");
+      return;
+    }
+
+    document.getElementById("nomeEntrega").value = usuarioAtual.nome || "";
+    mostrarSecao("checkout");
+  }
+
+  function calcularFrete() {
+    const cep = document
+      .getElementById("cep")
+      .value
+      .replace(/\D/g, "");
+
+    if (cep.length < 8) {
+      frete = 0;
+
+      document.getElementById("informacaoFrete").textContent =
+        "Digite seu CEP completo para calcular o frete.";
+    } else {
+      const primeiroNumero = Number(cep.charAt(0));
+
+      frete =
+        primeiroNumero <= 3
+        ? 12.90
+        : primeiroNumero <= 6
+        ? 18.90
+        : 24.90;
+
+      document.getElementById("informacaoFrete").textContent =
+        `Frete calculado: ${dinheiro(frete)} — prazo estimado de 5 a 10 dias úteis.`;
+    }
+
+    gerarPix();
+    renderCheckout();
+  }
+
+  function renderCheckout() {
+    const subtotal = valorProdutos();
+    const total = subtotal + frete;
+
+    document.getElementById("resumoCheckout").innerHTML = `
+      <div class="linha-resumo">
+        <span>Produtos</span>
+        <strong>${dinheiro(subtotal)}</strong>
+      </div>
+
+      <div class="linha-resumo">
+        <span>Frete</span>
+        <strong>${dinheiro(frete)}</strong>
+      </div>
+
+      <div class="linha-resumo total">
+        <span>Total</span>
+        <strong>${dinheiro(total)}</strong>
+      </div>
+    `;
+
+    gerarPix();
+  }
+
+  function mostrarCamposPagamento() {
+    const metodo = document.querySelector(
+      "input[name='pagamento']:checked"
+    ).value;
+
+    document.getElementById("camposCartao").style.display =
+      metodo === "credito" || metodo === "debito"
+      ? "block"
+      : "none";
+
+    document.getElementById("areaPix").style.display =
+      metodo === "pix"
+      ? "block"
+      : "none";
+  }
+
+  function gerarPix() {
+    const areaPix = document.getElementById("areaPix");
+
+    if (!areaPix) return;
+
+    const metodo = document.querySelector(
+      "input[name='pagamento']:checked"
+    )?.value;
+
+    if (metodo !== "pix") return;
+
+    if (frete === 0 || carrinho.length === 0) {
+      document.getElementById("codigoPix").textContent =
+        "Preencha o endereço e informe um CEP válido para gerar o Pix.";
+
+      document.getElementById("qrcode").innerHTML = "";
+      return;
+    }
+
+    const total = valorProdutos() + frete;
+
+    /*
+      Este é um código Pix demonstrativo.
+      Para pagamentos reais, substitua por um payload
+      gerado por um gateway de pagamento.
+    */
+    codigoPixAtual =
+      `00020126580014BR.GOV.BCB.PIX0136mare.serena.pagamento520400005303986540${total.toFixed(2)}5802BR5913MARE SERENA6009SAO PAULO62070503***6304ABCD`;
+
+    document.getElementById("codigoPix").textContent = codigoPixAtual;
+
+    const qrcode = document.getElementById("qrcode");
+    qrcode.innerHTML = "";
+
+    new QRCode(qrcode, {
+      text: codigoPixAtual,
+      width: 190,
+      height: 190,
+      colorDark: "#267c91",
+      colorLight: "#ffffff"
+    });
+  }
+
+  function copiarPix() {
+    if (!codigoPixAtual) {
+      alert("Gere o código Pix primeiro.");
+      return;
+    }
+
+    navigator.clipboard.writeText(codigoPixAtual)
+      .then(() => alert("Código Pix copiado!"))
+      .catch(() => alert("Não foi possível copiar automaticamente."));
+  }
+
+  function finalizarCompra() {
+    if (carrinho.length === 0) {
+      alert("Seu carrinho está vazio.");
+      return;
+    }
+
+    const campos = [
+      "cep",
+      "numero",
+      "nomeEntrega",
+      "rua",
+      "bairro",
+      "cidade",
+      "estado"
+    ];
+
+    const vazio = campos.some(id =>
+      !document.getElementById(id).value.trim()
+    );
+
+    if (vazio || frete === 0) {
+      exibirMensagem(
+        "mensagemCheckout",
+        "Preencha todos os dados de entrega e informe um CEP válido.",
+        false
+      );
+      return;
+    }
+
+    const metodo = document.querySelector(
+      "input[name='pagamento']:checked"
+    ).value;
+
+    if (metodo !== "pix") {
+      const numeroCartao = document
+        .getElementById("numeroCartao")
+        .value
+        .replace(/\D/g, "");
+
+      if (numeroCartao.length < 13) {
+        exibirMensagem(
+          "mensagemCheckout",
+          "Digite um número de cartão válido.",
+          false
+        );
+        return;
+      }
+    }
+
+    const pedido = {
+      id: "MS" + Date.now(),
+      usuario: usuarioAtual.email,
+      data: new Date().toLocaleDateString("pt-BR"),
+      itens: [...carrinho],
+      total: valorProdutos() + frete,
+      metodoPagamento: metodo,
+      status: "Pedido confirmado",
+      codigoRastreio:
+        "BR" + Math.floor(Math.random() * 900000000) + "BR"
+    };
+
+    pedidos.push(pedido);
+    carrinho = [];
+    frete = 0;
+    codigoPixAtual = "";
+
+    salvarDados();
+    atualizarContador();
+
+    exibirMensagem(
+      "mensagemCheckout",
+      `Pedido realizado com sucesso! Número do pedido: ${pedido.id}`,
+      true
+    );
+
+    setTimeout(() => mostrarSecao("perfil"), 1500);
+  }
+
+  function cadastrarUsuario() {
+    const nome = document.getElementById("cadastroNome").value.trim();
+    const email = document
+      .getElementById("cadastroEmail")
+      .value
+      .trim()
+      .toLowerCase();
+
+    const telefone = document
+      .getElementById("cadastroTelefone")
+      .value
+      .trim();
+
+    const senha = document.getElementById("cadastroSenha").value;
+
+    if (!nome || !email || !telefone || !senha) {
+      exibirMensagem(
+        "mensagemCadastro",
+        "Preencha todos os campos.",
+        false
+      );
+      return;
+    }
+
+    if (usuarios.some(usuario => usuario.email === email)) {
+      exibirMensagem(
+        "mensagemCadastro",
+        "Este e-mail já está cadastrado.",
+        false
+      );
+      return;
+    }
+
+    const usuario = {
+      nome,
+      email,
+      telefone,
+      senha
+    };
+
+    usuarios.push(usuario);
+    usuarioAtual = usuario;
+    salvarDados();
+
+    exibirMensagem(
+      "mensagemCadastro",
+      "Cadastro realizado com sucesso!",
+      true
+    );
+
+    setTimeout(() => mostrarSecao("perfil"), 1000);
+  }
+
+  function loginUsuario() {
+    const email = document
+      .getElementById("loginEmail")
+      .value
+      .trim()
+      .toLowerCase();
+
+    const senha = document.getElementById("loginSenha").value;
+
+    const usuario = usuarios.find(usuario =>
+      usuario.email === email
+    );
+
+    if (!usuario) {
+      exibirMensagem(
+        "mensagemLogin",
+        "E-mail não cadastrado. Você será direcionado para a área de cadastro.",
+        false
+      );
+
+      setTimeout(() => mostrarSecao("cadastro"), 1800);
+      return;
+    }
+
+    if (usuario.senha !== senha) {
+      exibirMensagem(
+        "mensagemLogin",
+        "Senha incorreta.",
+        false
+      );
+      return;
+    }
+
+    usuarioAtual = usuario;
+    salvarDados();
+
+    exibirMensagem(
+      "mensagemLogin",
+      "Login realizado com sucesso!",
+      true
+    );
+
+    setTimeout(() => mostrarSecao("perfil"), 800);
+  }
+
+  function renderPerfil() {
+    const container = document.getElementById("conteudoPerfil");
+
+    if (!usuarioAtual) {
+      container.innerHTML = `
+        <div class="cartao">
+          <p>Você ainda não está conectado.</p>
+          <button class="botao-principal" onclick="mostrarSecao('login')">
+            Fazer login
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    const meusPedidos = pedidos.filter(pedido =>
+      pedido.usuario === usuarioAtual.email
+    );
+
+    container.innerHTML = `
+      <div class="duas-colunas">
+        <div class="cartao">
+          <h3>Meus dados</h3>
+
+          <label>
+            Nome
+            <input id="perfilNome" value="${usuarioAtual.nome}">
+          </label>
+
+          <label>
+            E-mail
+            <input value="${usuarioAtual.email}" disabled>
+          </label>
+
+          <label>
+            Telefone
+            <input id="perfilTelefone" value="${usuarioAtual.telefone}">
+          </label>
+
+          <button class="botao-principal" onclick="salvarPerfil()">
+            Salvar alterações
+          </button>
+
+          <button
+            class="botao-perigo"
+            onclick="sairConta()"
+            style="margin-top:10px;"
+          >
+            Sair da conta
+          </button>
+        </div>
+
+        <div class="cartao">
+          <h3>Minhas compras</h3>
+
+          ${
+            meusPedidos.length === 0
+            ? "<p>Você ainda não realizou nenhuma compra.</p>"
+            : meusPedidos.map(pedido => `
+              <div class="pedido">
+                <strong>Pedido ${pedido.id}</strong>
+                <p>Data: ${pedido.data}</p>
+                <p>Total: ${dinheiro(pedido.total)}</p>
+                <p>Pagamento: ${pedido.metodoPagamento}</p>
+                <p>Status: ${pedido.status}</p>
+                <p>
+                  Código de rastreio:
+                  <strong>${pedido.codigoRastreio}</strong>
+                </p>
+
+                <div class="barra-rastreio">
+                  <div></div>
+                </div>
+
+                <small>
+                  Objeto em transporte para o endereço de entrega.
+                </small>
+              </div>
+            `).join("")
+          }
+        </div>
+      </div>
+    `;
+  }
+
+  function salvarPerfil() {
+    usuarioAtual.nome = document
+      .getElementById("perfilNome")
+      .value
+      .trim();
+
+    usuarioAtual.telefone = document
+      .getElementById("perfilTelefone")
+      .value
+      .trim();
+
+    const indice = usuarios.findIndex(usuario =>
+      usuario.email === usuarioAtual.email
+    );
+
+    usuarios[indice] = usuarioAtual;
+    salvarDados();
+
+    alert("Dados atualizados com sucesso.");
+    renderPerfil();
+  }
+
+  function sairConta() {
+    usuarioAtual = null;
+    salvarDados();
+    alert("Você saiu da sua conta.");
+    mostrarSecao("inicio");
+  }
+
+  function exibirMensagem(id, texto, sucesso) {
+    const elemento = document.getElementById(id);
+
+    elemento.textContent = texto;
+    elemento.className = sucesso
+      ? "mensagem sucesso"
+      : "mensagem";
+
+    elemento.style.display = "block";
+  }
+
+  function entrarAdmin() {
+    const senha = document.getElementById("senhaAdmin").value;
+
+    if (senha !== "praia123") {
+      exibirMensagem(
+        "mensagemAdmin",
+        "Senha administrativa incorreta.",
+        false
+      );
+      return;
+    }
+
+    document.getElementById("loginAdmin").style.display = "none";
+    document.getElementById("painelAdmin").style.display = "block";
+
+    renderAdmin();
+  }
+
+  function renderAdmin() {
+    const lista = document.getElementById("listaAdmin");
+
+    if (!lista) return;
+
+    lista.innerHTML = produtos.map(produto => `
+      <div class="admin-produto">
+        <img src="${produto.imagem}" alt="${produto.nome}">
+
+        <div>
+          <label>
+            Nome
+            <input id="nome-${produto.id}" value="${produto.nome}">
+          </label>
+
+          <label>
+            Preço
+            <input
+              id="preco-${produto.id}"
+              type="number"
+              step="0.01"
+              value="${produto.preco}"
+            >
+          </label>
+        </div>
+
+        <div>
+          <label>
+            Link da imagem
+            <input id="imagem-${produto.id}" value="${produto.imagem}">
+          </label>
+
+          <label>
+            Categoria
+            <select id="categoria-${produto.id}">
+              <option ${produto.categoria === "Chapéus" ? "selected" : ""}>Chapéus</option>
+              <option ${produto.categoria === "Bolsas" ? "selected" : ""}>Bolsas</option>
+              <option ${produto.categoria === "Bijuterias" ? "selected" : ""}>Bijuterias</option>
+              <option ${produto.categoria === "Óculos" ? "selected" : ""}>Óculos</option>
+              <option ${produto.categoria === "Outros" ? "selected" : ""}>Outros</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Cores
+          <input
+            id="cores-${produto.id}"
+            value="${(produto.cores || []).join(", ")}"
+          >
+        </label>
+
+        <label>
+          Modelos
+          <input
+            id="modelos-${produto.id}"
+            value="${(produto.modelos || []).join(", ")}"
+          >
+        </label>
+
+        <label>
+          Descrição
+          <textarea id="descricao-${produto.id}">${produto.descricao}</textarea>
+        </label>
+
+        <button
+          class="botao-principal"
+          onclick="salvarProduto(${produto.id})"
+        >
+          Salvar
+        </button>
+
+        <button
+          class="botao-perigo"
+          onclick="excluirProduto(${produto.id})"
+        >
+          Excluir
+        </button>
+      </div>
+    `).join("");
+  }
+
+  function converterLista(texto) {
+    return texto
+      .split(",")
+      .map(item => item.trim())
+      .filter(item => item.length > 0);
+  }
+
+  function adicionarProduto() {
+    const nome = document.getElementById("novoNome").value.trim();
+    const categoria = document.getElementById("novaCategoria").value;
+    const preco = Number(document.getElementById("novoPreco").value);
+    const imagem = document.getElementById("novaImagem").value.trim();
+    const descricao = document.getElementById("novaDescricao").value.trim();
+
+    const cores = converterLista(
+      document.getElementById("novasCores").value
+    );
+
+    const modelos = converterLista(
+      document.getElementById("novosModelos").value
+    );
+
+    if (!nome || !preco || !imagem || !descricao) {
+      alert("Preencha nome, preço, imagem e descrição.");
+      return;
+    }
+
+    produtos.push({
+      id: Date.now(),
+      nome,
+      categoria,
+      preco,
+      imagem,
+      descricao,
+      cores,
+      modelos
+    });
+
+    salvarDados();
+    renderAdmin();
+    renderInicio();
+    renderProdutos();
+
+    document.getElementById("novoNome").value = "";
+    document.getElementById("novoPreco").value = "";
+    document.getElementById("novaImagem").value = "";
+    document.getElementById("novaDescricao").value = "";
+    document.getElementById("novasCores").value = "";
+    document.getElementById("novosModelos").value = "";
+
+    alert("Produto adicionado com sucesso.");
+  }
+
+  function salvarProduto(id) {
+    const produto = produtos.find(produto => produto.id === id);
+
+    produto.nome = document.getElementById(`nome-${id}`).value;
+    produto.preco = Number(document.getElementById(`preco-${id}`).value);
+    produto.imagem = document.getElementById(`imagem-${id}`).value;
+    produto.categoria = document.getElementById(`categoria-${id}`).value;
+
+    produto.cores = converterLista(
+      document.getElementById(`cores-${id}`).value
+    );
+
+    produto.modelos = converterLista(
+      document.getElementById(`modelos-${id}`).value
+    );
+
+    produto.descricao = document.getElementById(
+      `descricao-${id}`
+    ).value;
+
+    salvarDados();
+    renderAdmin();
+    renderInicio();
+    renderProdutos();
+
+    alert("Produto atualizado com sucesso.");
+  }
+
+  function excluirProduto(id) {
+    if (!confirm("Deseja realmente excluir este produto?")) return;
+
+    produtos = produtos.filter(produto => produto.id !== id);
+    carrinho = carrinho.filter(item => item.id !== id);
+
+    salvarDados();
+    renderAdmin();
+    renderInicio();
+    renderProdutos();
+    atualizarContador();
+  }
+
+  document.getElementById("cep").addEventListener("input", function() {
+    let valor = this.value.replace(/\D/g, "");
+
+    if (valor.length > 5) {
+      valor = valor.substring(0, 5) + "-" + valor.substring(5, 8);
+    }
+
+    this.value = valor;
+    calcularFrete();
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderInicio();
+    renderProdutos();
+    atualizarContador();
+    mostrarCamposPagamento();
+  });
+</script>
+
+</body>
+</html>
