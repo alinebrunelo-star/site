@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Maré Serena — acessórios e utensílios para dias de praia.">
+
   <title>Maré Serena | Acessórios Praianos</title>
 
-  <!-- Biblioteca para gerar QR Code -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
@@ -19,7 +21,8 @@
       --texto: #31515a;
       --branco: #fff;
       --vermelho: #df7777;
-      --sombra: 0 8px 25px rgba(48, 112, 128, .15);
+      --verde: #4eaa69;
+      --sombra: 0 8px 25px rgba(48,112,128,.15);
       --raio: 18px;
     }
 
@@ -30,6 +33,10 @@
       font-family: Arial, Helvetica, sans-serif;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       color: var(--texto);
       background: linear-gradient(180deg, #f7ffff, var(--areia));
@@ -37,7 +44,7 @@
     }
 
     header {
-      background: rgba(255, 255, 255, .96);
+      background: rgba(255,255,255,.97);
       box-shadow: var(--sombra);
       position: sticky;
       top: 0;
@@ -47,7 +54,7 @@
     .topo {
       max-width: 1200px;
       margin: auto;
-      padding: 18px 24px;
+      padding: 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -59,6 +66,7 @@
       font-size: 1.65rem;
       font-weight: 800;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .logo span {
@@ -68,7 +76,7 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -91,24 +99,34 @@
       filter: brightness(.97);
     }
 
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .botao-principal {
       background: var(--azul-escuro);
-      color: white;
+      color: #fff;
     }
 
     .botao-coral {
       background: var(--coral);
-      color: white;
+      color: #fff;
     }
 
     .botao-perigo {
       background: var(--vermelho);
-      color: white;
+      color: #fff;
+    }
+
+    .botao-secundario {
+      background: var(--azul-claro);
     }
 
     .contador {
       background: var(--coral);
-      color: white;
+      color: #fff;
       padding: 2px 7px;
       border-radius: 20px;
       font-size: .75rem;
@@ -134,10 +152,16 @@
       padding: 55px;
       display: flex;
       align-items: center;
+
       background:
-        linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.25)),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.92),
+          rgba(255,255,255,.22)
+        ),
         url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80")
         center/cover;
+
       box-shadow: var(--sombra);
     }
 
@@ -178,6 +202,14 @@
       margin-bottom: 22px;
     }
 
+    .filtros input {
+      max-width: 420px;
+    }
+
+    .filtros select {
+      max-width: 260px;
+    }
+
     input,
     select,
     textarea {
@@ -185,7 +217,7 @@
       padding: 13px 14px;
       border: 1px solid #c8e8ec;
       border-radius: 12px;
-      background: white;
+      background: #fff;
       color: var(--texto);
       outline: none;
       margin-top: 6px;
@@ -200,7 +232,7 @@
     select:focus,
     textarea:focus {
       border-color: var(--azul-escuro);
-      box-shadow: 0 0 0 3px rgba(38, 124, 145, .12);
+      box-shadow: 0 0 0 3px rgba(38,124,145,.12);
     }
 
     label {
@@ -212,12 +244,15 @@
 
     .produtos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(215px, 1fr)
+      );
       gap: 22px;
     }
 
     .produto {
-      background: white;
+      background: #fff;
       border-radius: var(--raio);
       box-shadow: var(--sombra);
       overflow: hidden;
@@ -229,6 +264,7 @@
       width: 100%;
       height: 220px;
       object-fit: cover;
+      background: var(--azul-claro);
     }
 
     .produto-conteudo {
@@ -238,7 +274,8 @@
       flex: 1;
     }
 
-    .produto-conteudo .botao {
+    .produto-conteudo .botao,
+    .produto-conteudo button {
       margin-top: auto;
       width: 100%;
     }
@@ -419,7 +456,7 @@
     .pix-copia-cola {
       font-size: .8rem;
       word-break: break-all;
-      background: white;
+      background: #fff;
       padding: 12px;
       border-radius: 10px;
       text-align: left;
@@ -431,6 +468,120 @@
       padding: 30px;
       background: var(--azul-claro);
       margin-top: 30px;
+    }
+
+    .toast-container {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      width: min(92vw, 520px);
+    }
+
+    .toast {
+      background: #31515a;
+      color: #fff;
+      padding: 13px 19px;
+      border-radius: 999px;
+      box-shadow: 0 8px 25px rgba(0,0,0,.22);
+      font-weight: bold;
+      animation:
+        toastIn .22s ease,
+        toastOut .25s ease 2.5s forwards;
+      text-align: center;
+    }
+
+    .toast.erro {
+      background: #a95151;
+    }
+
+    .toast.sucesso {
+      background: #287039;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes toastOut {
+      to {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+    }
+
+    .vazio {
+      text-align: center;
+      padding: 30px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+    }
+
+    .favorito {
+      background: #fff;
+      border: 1px solid #e8d9d9;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--amarelo);
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: bold;
+    }
+
+    .acoes {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .acoes button {
+      flex: 1;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+
+    .info-pequena {
+      font-size: .85rem;
+      opacity: .8;
+    }
+
+    .pedido-itens {
+      font-size: .9rem;
+      margin: 10px 0;
+      padding-left: 18px;
+    }
+
+    .cupom-linha {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .cupom-linha label {
+      flex: 1;
+      margin: 0;
     }
 
     @media (max-width: 760px) {
@@ -457,6 +608,7 @@
 
       .admin-produto input,
       .admin-produto textarea,
+      .admin-produto select,
       .admin-produto button {
         grid-column: span 2;
       }
@@ -465,1373 +617,4394 @@
         align-items: flex-start;
         flex-wrap: wrap;
       }
+
+      .toast {
+        border-radius: 16px;
+      }
     }
+
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="topo">
-    <div class="logo" onclick="mostrarSecao('inicio')">
-      Maré <span>Serena</span> 🌊
-    </div>
-
-    <nav>
-      <button onclick="mostrarSecao('inicio')">Início</button>
-      <button onclick="mostrarSecao('loja')">Loja</button>
-      <button onclick="mostrarSecao('carrinho')">
-        Carrinho <span id="contadorCarrinho" class="contador">0</span>
-      </button>
-      <button onclick="mostrarSecao('perfil')">Meu perfil</button>
-      <button onclick="mostrarSecao('login')" id="botaoLogin">Entrar</button>
-      <button onclick="mostrarSecao('admin')">Administração</button>
-    </nav>
-  </div>
-</header>
-
-<main>
-
-  <section id="inicio" class="secao ativa">
-    <div class="hero">
-      <div class="hero-conteudo">
-        <h1>Leve a praia com você</h1>
-        <p>
-          Acessórios leves, coloridos e feitos para combinar com dias de sol,
-          areia e mar.
-        </p>
-        <button class="botao-principal" onclick="mostrarSecao('loja')">
-          Ver produtos
-        </button>
-      </div>
-    </div>
-
-    <div class="titulo-secao">
-      <h2>Todos os nossos produtos</h2>
-      <p>Confira todas as novidades da Maré Serena.</p>
-    </div>
-
-    <!-- Todos os produtos aparecem aqui -->
-    <div id="produtosInicio" class="produtos"></div>
-  </section>
-
-  <section id="loja" class="secao">
-    <div class="titulo-secao">
-      <h2>Nossa loja</h2>
-      <p>Escolha seus produtos e personalize suas opções.</p>
-    </div>
-
-    <div class="filtros">
-      <input
-        id="buscaProduto"
-        type="search"
-        placeholder="Buscar produto..."
-        oninput="renderProdutos()"
-      >
-
-      <select id="filtroCategoria" onchange="renderProdutos()">
-        <option value="">Todas as categorias</option>
-        <option value="Chapéus">Chapéus</option>
-        <option value="Bolsas">Bolsas</option>
-        <option value="Bijuterias">Bijuterias</option>
-        <option value="Óculos">Óculos</option>
-        <option value="Outros">Outros</option>
-      </select>
-    </div>
-
-    <div id="listaProdutos" class="produtos"></div>
-  </section>
-
-  <section id="carrinho" class="secao">
-    <h2>Meu carrinho</h2>
-
-    <div class="cartao">
-      <div id="itensCarrinho"></div>
-      <div id="resumoCarrinho"></div>
-    </div>
-
-    <button class="botao-principal" onclick="irParaCheckout()">
-      Continuar para pagamento
-    </button>
-  </section>
-
-  <section id="checkout" class="secao">
-    <h2>Pagamento e entrega</h2>
-
-    <div id="mensagemCheckout" class="mensagem"></div>
-
-    <div class="duas-colunas">
-      <div class="cartao">
-        <h3>Dados de entrega</h3>
-
-        <div class="tres-colunas">
-          <label>
-            CEP
-            <input id="cep" placeholder="00000-000" maxlength="9">
-          </label>
-
-          <label>
-            Número
-            <input id="numero" placeholder="123">
-          </label>
-
-          <label>
-            Complemento
-            <input id="complemento" placeholder="Apartamento, casa...">
-          </label>
+    <header>
+      <div class="topo">
+    
+        <div class="logo" onclick="mostrarSecao('inicio')">
+          Maré <span>Serena</span> 🌊
         </div>
-
-        <label>
-          Nome completo
-          <input id="nomeEntrega" placeholder="Digite seu nome">
-        </label>
-
-        <label>
-          Rua
-          <input id="rua" placeholder="Rua, avenida...">
-        </label>
-
-        <div class="tres-colunas">
-          <label>
-            Bairro
-            <input id="bairro" placeholder="Bairro">
-          </label>
-
-          <label>
-            Cidade
-            <input id="cidade" placeholder="Cidade">
-          </label>
-
-          <label>
-            Estado
-            <input id="estado" placeholder="UF">
-          </label>
-        </div>
-
-        <p id="informacaoFrete">
-          Digite seu CEP para calcular o frete.
-        </p>
-      </div>
-
-      <div class="cartao">
-        <h3>Forma de pagamento</h3>
-
-        <div class="metodo-pagamento">
-          <label>
-            <input
-              type="radio"
-              name="pagamento"
-              value="pix"
-              checked
-              onchange="mostrarCamposPagamento()"
-            >
-            Pix
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="pagamento"
-              value="credito"
-              onchange="mostrarCamposPagamento()"
-            >
-            Cartão de crédito
-          </label>
-
-          <label>
-            <input
-              type="radio"
-              name="pagamento"
-              value="debito"
-              onchange="mostrarCamposPagamento()"
-            >
-            Cartão de débito
-          </label>
-        </div>
-
-        <div id="areaPix" class="pix-box">
-          <h3>Pagamento via Pix</h3>
-          <p>O QR Code será gerado com o valor total do pedido.</p>
-
-          <div id="qrcode"></div>
-
-          <div id="codigoPix" class="pix-copia-cola">
-            Preencha o endereço para gerar o código Pix.
-          </div>
-
-          <button class="botao-coral" onclick="copiarPix()">
-            Copiar código Pix
+    
+        <nav>
+          <button onclick="mostrarSecao('inicio')">Início</button>
+    
+          <button onclick="mostrarSecao('loja')">
+            Loja
           </button>
-
-          <p style="margin-top:12px;">
-            Depois de pagar, clique em “Finalizar pedido”.
-          </p>
-        </div>
-
-        <div id="camposCartao" style="display:none;">
-          <label>
-            Nome no cartão
-            <input id="nomeCartao" placeholder="Nome impresso no cartão">
-          </label>
-
-          <label>
-            Número do cartão
-            <input
-              id="numeroCartao"
-              placeholder="0000 0000 0000 0000"
-              maxlength="19"
-            >
-          </label>
-
-          <div class="tres-colunas">
-            <label>
-              Validade
-              <input id="validadeCartao" placeholder="MM/AA">
-            </label>
-
-            <label>
-              CVV
-              <input id="cvvCartao" placeholder="123" maxlength="4">
-            </label>
-
-            <label>
-              Parcelas
-              <select id="parcelas">
-                <option>1x sem juros</option>
-                <option>2x sem juros</option>
-                <option>3x sem juros</option>
-                <option>6x com juros</option>
-              </select>
-            </label>
-          </div>
-        </div>
-
-        <div id="resumoCheckout" class="resumo"></div>
-
-        <button class="botao-principal" onclick="finalizarCompra()">
-          Finalizar pedido
-        </button>
+    
+          <button onclick="mostrarSecao('carrinho')">
+            Carrinho
+            <span id="contadorCarrinho" class="contador">0</span>
+          </button>
+    
+          <button onclick="mostrarSecao('perfil')" id="botaoPerfil">
+            Meu perfil
+          </button>
+    
+          <button onclick="mostrarSecao('login')" id="botaoLogin">
+            Entrar
+          </button>
+    
+          <button onclick="mostrarSecao('cadastro')" id="botaoCadastro">
+            Criar conta
+          </button>
+    
+          <button
+            onclick="sairConta()"
+            id="botaoSair"
+            class="botao-perigo oculto">
+            Sair
+          </button>
+    
+          <button onclick="mostrarSecao('admin')">
+            Administração
+          </button>
+        </nav>
+    
       </div>
-    </div>
-  </section>
-
-  <section id="cadastro" class="secao">
-    <div class="cartao" style="max-width:600px;margin:auto;">
-      <h2>Criar cadastro</h2>
-
-      <div id="mensagemCadastro" class="mensagem"></div>
-
-      <label>
-        Nome completo
-        <input id="cadastroNome" placeholder="Seu nome">
-      </label>
-
-      <label>
-        E-mail
-        <input id="cadastroEmail" type="email" placeholder="seu@email.com">
-      </label>
-
-      <label>
-        Telefone
-        <input id="cadastroTelefone" placeholder="(00) 00000-0000">
-      </label>
-
-      <label>
-        Senha
-        <input id="cadastroSenha" type="password" placeholder="Crie uma senha">
-      </label>
-
-      <button class="botao-principal" onclick="cadastrarUsuario()">
-        Criar conta
-      </button>
-
-      <p style="margin-top:15px;">
-        Já possui uma conta?
-        <button onclick="mostrarSecao('login')">Entrar</button>
-      </p>
-    </div>
-  </section>
-
-  <section id="login" class="secao">
-    <div class="cartao" style="max-width:600px;margin:auto;">
-      <h2>Entrar na conta</h2>
-
-      <div id="mensagemLogin" class="mensagem"></div>
-
-      <label>
-        E-mail
-        <input id="loginEmail" type="email" placeholder="seu@email.com">
-      </label>
-
-      <label>
-        Senha
-        <input id="loginSenha" type="password" placeholder="Sua senha">
-      </label>
-
-      <button class="botao-principal" onclick="loginUsuario()">
-        Entrar
-      </button>
-
-      <p style="margin-top:15px;">
-        Ainda não possui cadastro?
-        <button onclick="mostrarSecao('cadastro')">Criar conta</button>
-      </p>
-    </div>
-  </section>
-
-  <section id="perfil" class="secao">
-    <h2>Meu perfil</h2>
-    <div id="conteudoPerfil"></div>
-  </section>
-
-  <section id="admin" class="secao">
-    <div id="loginAdmin" class="cartao" style="max-width:500px;margin:auto;">
-      <h2>Área administrativa</h2>
-      <p>Área exclusiva para editar e cadastrar produtos.</p>
-
-      <label>
-        Senha administrativa
-        <input id="senhaAdmin" type="password" placeholder="Digite a senha">
-      </label>
-
-      <button class="botao-principal" onclick="entrarAdmin()">
-        Acessar administração
-      </button>
-
-      <div id="mensagemAdmin" class="mensagem"></div>
-    </div>
-
-    <div id="painelAdmin" class="cartao" style="display:none;">
-      <h2>Adicionar produto</h2>
-
-      <div class="duas-colunas">
-        <label>
-          Nome do produto
-          <input id="novoNome" placeholder="Ex.: Bolsa de palha">
-        </label>
-
-        <label>
-          Categoria
-          <select id="novaCategoria">
+    </header>
+    
+    
+    <main>
+    
+      <!-- ==================== INÍCIO ==================== -->
+    
+      <section id="inicio" class="secao ativa">
+    
+        <div class="hero">
+    
+          <div class="hero-conteudo">
+    
+            <h1>Leve a praia com você</h1>
+    
+            <p>
+              Acessórios leves, coloridos e feitos para combinar
+              com dias de sol, areia e mar.
+            </p>
+    
+            <button
+              class="botao-principal"
+              onclick="mostrarSecao('loja')">
+              Ver produtos
+            </button>
+    
+          </div>
+    
+        </div>
+    
+    
+        <div class="titulo-secao">
+    
+          <h2>Todos os nossos produtos</h2>
+    
+          <p>
+            Confira todas as novidades da Maré Serena.
+          </p>
+    
+        </div>
+    
+    
+        <div id="produtosInicio" class="produtos"></div>
+    
+      </section>
+    
+    
+      <!-- ==================== LOJA ==================== -->
+    
+      <section id="loja" class="secao">
+    
+        <div class="titulo-secao">
+    
+          <h2>Nossa loja</h2>
+    
+          <p>
+            Escolha seus produtos e personalize suas opções.
+          </p>
+    
+        </div>
+    
+    
+        <div class="filtros">
+    
+          <input
+            id="buscaProduto"
+            type="search"
+            placeholder="Buscar produto..."
+            oninput="renderProdutos()"
+          >
+    
+          <select
+            id="filtroCategoria"
+            onchange="renderProdutos()">
+    
+            <option value="">
+              Todas as categorias
+            </option>
+    
             <option>Chapéus</option>
             <option>Bolsas</option>
             <option>Bijuterias</option>
             <option>Óculos</option>
             <option>Outros</option>
+    
           </select>
-        </label>
-
-        <label>
-          Preço
-          <input id="novoPreco" type="number" step="0.01" placeholder="59.90">
-        </label>
-
-        <label>
-          Link da imagem
-          <input id="novaImagem" placeholder="https://...">
-        </label>
-
-        <label>
-          Cores disponíveis
-          <input
-            id="novasCores"
-            placeholder="Azul, Amarelo, Rosa"
+    
+    
+          <button
+            class="botao-secundario"
+            onclick="limparFiltros()">
+    
+            Limpar filtros
+    
+          </button>
+    
+        </div>
+    
+    
+        <div id="listaProdutos" class="produtos"></div>
+    
+      </section>
+    
+    
+      <!-- ==================== CARRINHO ==================== -->
+    
+      <section id="carrinho" class="secao">
+    
+        <h2>Meu carrinho</h2>
+    
+    
+        <div class="cartao">
+    
+          <div id="itensCarrinho"></div>
+    
+          <div id="resumoCarrinho"></div>
+    
+        </div>
+    
+    
+        <button
+          class="botao-principal"
+          onclick="irParaCheckout()">
+    
+          Continuar para pagamento
+    
+        </button>
+    
+      </section>
+    
+    
+      <!-- ==================== CHECKOUT ==================== -->
+    
+      <section id="checkout" class="secao">
+    
+        <h2>Pagamento e entrega</h2>
+    
+    
+        <div
+          id="mensagemCheckout"
+          class="mensagem">
+        </div>
+    
+    
+        <div class="duas-colunas">
+    
+    
+          <!-- DADOS DE ENTREGA -->
+    
+          <div class="cartao">
+    
+            <h3>Dados de entrega</h3>
+    
+    
+            <div class="tres-colunas">
+    
+              <label>
+                CEP
+    
+                <input
+                  id="cep"
+                  placeholder="00000-000"
+                  maxlength="9"
+                  autocomplete="postal-code"
+                >
+    
+              </label>
+    
+    
+              <label>
+                Número
+    
+                <input
+                  id="numero"
+                  placeholder="123"
+                >
+    
+              </label>
+    
+    
+              <label>
+                Complemento
+    
+                <input
+                  id="complemento"
+                  placeholder="Apartamento, casa..."
+                >
+    
+              </label>
+    
+            </div>
+    
+    
+            <label>
+              Nome completo
+    
+              <input
+                id="nomeEntrega"
+                placeholder="Digite seu nome"
+                autocomplete="name"
+              >
+    
+            </label>
+    
+    
+            <label>
+              Rua
+    
+              <input
+                id="rua"
+                placeholder="Rua, avenida..."
+                autocomplete="street-address"
+              >
+    
+            </label>
+    
+    
+            <div class="tres-colunas">
+    
+              <label>
+                Bairro
+    
+                <input
+                  id="bairro"
+                  placeholder="Bairro"
+                >
+    
+              </label>
+    
+    
+              <label>
+                Cidade
+    
+                <input
+                  id="cidade"
+                  placeholder="Cidade"
+                >
+    
+              </label>
+    
+    
+              <label>
+                Estado
+    
+                <input
+                  id="estado"
+                  placeholder="UF"
+                  maxlength="2"
+                >
+    
+              </label>
+    
+            </div>
+    
+    
+            <p id="informacaoFrete">
+              Digite seu CEP para calcular o frete.
+            </p>
+    
+    
+            <p class="info-pequena">
+              O cálculo de frete desta versão é demonstrativo.
+              Para lançamento real, conecte uma transportadora
+              ou gateway de frete.
+            </p>
+    
+          </div>
+    
+    
+          <!-- PAGAMENTO -->
+    
+          <div class="cartao">
+    
+            <h3>Forma de pagamento</h3>
+    
+    
+            <div class="metodo-pagamento">
+    
+              <label>
+    
+                <input
+                  type="radio"
+                  name="pagamento"
+                  value="pix"
+                  checked
+                  onchange="mostrarCamposPagamento()"
+                >
+    
+                Pix
+    
+              </label>
+    
+    
+              <label>
+    
+                <input
+                  type="radio"
+                  name="pagamento"
+                  value="credito"
+                  onchange="mostrarCamposPagamento()"
+                >
+    
+                Cartão de crédito
+    
+              </label>
+    
+    
+              <label>
+    
+                <input
+                  type="radio"
+                  name="pagamento"
+                  value="debito"
+                  onchange="mostrarCamposPagamento()"
+                >
+    
+                Cartão de débito
+    
+              </label>
+    
+            </div>
+    
+    
+            <!-- PIX -->
+    
+            <div id="areaPix" class="pix-box">
+    
+              <h3>Pagamento via Pix</h3>
+    
+              <p>
+                O QR Code será exibido com o valor total do pedido.
+              </p>
+    
+    
+              <div id="qrcode"></div>
+    
+    
+              <div
+                id="codigoPix"
+                class="pix-copia-cola">
+    
+                Preencha o endereço para gerar o Pix.
+    
+              </div>
+    
+    
+              <button
+                class="botao-coral"
+                onclick="copiarPix()">
+    
+                Copiar código Pix
+    
+              </button>
+    
+    
+              <p
+                class="info-pequena"
+                style="margin-top:12px">
+    
+                ⚠️ Este Pix é apenas demonstrativo e não
+                confirma pagamento bancário real.
+    
+              </p>
+    
+            </div>
+    
+    
+            <!-- CARTÃO -->
+    
+            <div
+              id="camposCartao"
+              style="display:none">
+    
+              <label>
+    
+                Nome no cartão
+    
+                <input
+                  id="nomeCartao"
+                  placeholder="Nome impresso no cartão"
+                >
+    
+              </label>
+    
+    
+              <label>
+    
+                Número do cartão
+    
+                <input
+                  id="numeroCartao"
+                  placeholder="0000 0000 0000 0000"
+                  maxlength="19"
+                  inputmode="numeric"
+                >
+    
+              </label>
+    
+    
+              <div class="tres-colunas">
+    
+                <label>
+    
+                  Validade
+    
+                  <input
+                    id="validadeCartao"
+                    placeholder="MM/AA"
+                    maxlength="5"
+                  >
+    
+                </label>
+    
+    
+                <label>
+    
+                  CVV
+    
+                  <input
+                    id="cvvCartao"
+                    placeholder="123"
+                    maxlength="4"
+                    inputmode="numeric"
+                  >
+    
+                </label>
+    
+    
+                <label>
+    
+                  Parcelas
+    
+                  <select id="parcelas">
+    
+                    <option>
+                      1x sem juros
+                    </option>
+    
+                    <option>
+                      2x sem juros
+                    </option>
+    
+                    <option>
+                      3x sem juros
+                    </option>
+    
+                    <option>
+                      6x com juros
+                    </option>
+    
+                  </select>
+    
+                </label>
+    
+              </div>
+    
+            </div>
+    
+    
+            <!-- RESUMO -->
+    
+            <div
+              class="resumo"
+              id="resumoCheckout">
+            </div>
+    
+    
+            <button
+              class="botao-principal"
+              onclick="finalizarCompra()">
+    
+              Finalizar pedido
+    
+            </button>
+    
+          </div>
+    
+        </div>
+    
+      </section>
+    
+    
+      <!-- ==================== CADASTRO ==================== -->
+    
+      <section id="cadastro" class="secao">
+    
+        <div
+          class="cartao"
+          style="max-width:600px;margin:auto">
+    
+          <h2>Criar cadastro</h2>
+    
+          <div
+            id="mensagemCadastro"
+            class="mensagem">
+          </div>
+    
+    
+          <label>
+    
+            Nome completo
+    
+            <input
+              id="cadastroNome"
+              placeholder="Seu nome"
+              autocomplete="name"
+            >
+    
+          </label>
+    
+    
+          <label>
+    
+            G-mail
+    
+            <input
+              id="cadastroEmail"
+              type="gmail"
+              placeholder="seu@gmail.com"
+              autocomplete="gmail"
+            >
+    
+          </label>
+    
+    
+          <label>
+    
+            Telefone
+    
+            <input
+              id="cadastroTelefone"
+              placeholder="(00) 00000-0000"
+              autocomplete="tel"
+            >
+    
+          </label>
+    
+    
+          <label>
+    
+            Senha
+    
+            <input
+              id="cadastroSenha"
+              type="password"
+              placeholder="Crie uma senha"
+              autocomplete="new-password"
+            >
+    
+          </label>
+    
+    
+          <button
+            class="botao-principal"
+            onclick="cadastrarUsuario()">
+    
+            Criar conta
+    
+          </button>
+    
+    
+          <p style="margin-top:15px">
+    
+            Já possui uma conta?
+    
+            <button onclick="mostrarSecao('login')">
+              Entrar
+            </button>
+    
+          </p>
+    
+        </div>
+    
+      </section>
+    
+    
+      <!-- ==================== LOGIN ==================== -->
+    
+      <section id="login" class="secao">
+    
+        <div
+          class="cartao"
+          style="max-width:600px;margin:auto">
+    
+          <h2>Entrar na conta</h2>
+    
+    
+          <div
+            id="mensagemLogin"
+            class="mensagem">
+          </div>
+    
+    
+          <label>
+    
+            E-mail
+    
+            <input
+              id="loginGmail"
+              type="gmail"
+              placeholder="seu@gmail.com"
+              autocomplete="gmail"
+            >
+    
+          </label>
+    
+    
+          <label>
+    
+            Senha
+    
+            <input
+              id="loginSenha"
+              type="password"
+              placeholder="Sua senha"
+              autocomplete="current-password"
+            >
+    
+          </label>
+    
+    
+          <button
+            class="botao-principal"
+            onclick="loginUsuario()">
+    
+            Entrar
+    
+          </button>
+    
+    
+          <p style="margin-top:15px">
+    
+            Ainda não possui cadastro?
+    
+            <button onclick="mostrarSecao('cadastro')">
+              Criar conta
+            </button>
+    
+          </p>
+    
+        </div>
+    
+      </section>
+    
+    
+      <!-- ==================== PERFIL ==================== -->
+    
+      <section id="perfil" class="secao">
+    
+        <h2>Meu perfil</h2>
+    
+        <div id="conteudoPerfil"></div>
+    
+      </section>
+    
+    
+      <!-- ==================== ADMINISTRAÇÃO ==================== -->
+    
+      <section id="admin" class="secao">
+    
+    
+        <!-- LOGIN ADMIN -->
+    
+        <div
+          id="loginAdmin"
+          class="cartao"
+          style="max-width:500px;margin:auto">
+    
+          <h2>Área administrativa</h2>
+    
+          <p>
+            Área exclusiva para editar e cadastrar produtos.
+          </p>
+    
+    
+          <label>
+    
+            Senha administrativa
+    
+            <input
+              id="senhaAdmin"
+              type="password"
+              placeholder="Digite a senha"
+            >
+    
+          </label>
+    
+    
+          <button
+            class="botao-principal"
+            onclick="entrarAdmin()">
+    
+            Acessar administração
+    
+          </button>
+    
+    
+          <div
+            id="mensagemAdmin"
+            class="mensagem">
+          </div>
+    
+        </div>
+    
+    
+        <!-- PAINEL ADMIN -->
+    
+        <div
+          id="painelAdmin"
+          class="cartao"
+          style="display:none">
+    
+          <h2>Adicionar produto</h2>
+    
+    
+          <div class="duas-colunas">
+    
+            <label>
+    
+              Nome do produto
+    
+              <input
+                id="novoNome"
+                placeholder="Ex.: Bolsa de palha"
+              >
+    
+            </label>
+    
+    
+            <label>
+    
+              Categoria
+    
+              <select id="novaCategoria">
+    
+                <option>Chapéus</option>
+                <option>Bolsas</option>
+                <option>Bijuterias</option>
+                <option>Óculos</option>
+                <option>Outros</option>
+    
+              </select>
+    
+            </label>
+    
+    
+            <label>
+    
+              Preço
+    
+              <input
+                id="novoPreco"
+                type="number"
+                min="0.01"
+                step="0.01"
+                placeholder="59.90"
+              >
+    
+            </label>
+    
+    
+            <label>
+    
+              Link da imagem
+    
+              <input
+                id="novaImagem"
+                placeholder="https://..."
+              >
+    
+            </label>
+    
+    
+            <label>
+    
+              Cores disponíveis
+    
+              <input
+                id="novasCores"
+                placeholder="Azul, Amarelo, Rosa"
+              >
+    
+            </label>
+    
+    
+            <label>
+    
+              Modelos disponíveis
+    
+              <input
+                id="novosModelos"
+                placeholder="Tradicional, Grande, Pequeno"
+              >
+    
+            </label>
+    
+          </div>
+    
+    
+          <label>
+    
+            Descrição
+    
+            <textarea
+              id="novaDescricao"
+              placeholder="Descrição do produto">
+            </textarea>
+    
+          </label>
+    
+    
+          <button
+            class="botao-principal"
+            onclick="adicionarProduto()">
+    
+            Adicionar produto
+    
+          </button>
+    
+    
+          <hr
+            style="
+              margin:25px 0;
+              border:0;
+              border-top:1px solid #d8eeee;
+            "
           >
-        </label>
-
-        <label>
-          Modelos disponíveis
-          <input
-            id="novosModelos"
-            placeholder="Tradicional, Grande, Pequeno"
-          >
-        </label>
-      </div>
-
-      <label>
-        Descrição
-        <textarea id="novaDescricao" placeholder="Descrição do produto"></textarea>
-      </label>
-
-      <button class="botao-principal" onclick="adicionarProduto()">
-        Adicionar produto
-      </button>
-
-      <hr style="margin:25px 0;border:0;border-top:1px solid #d8eeee">
-
-      <h2>Produtos cadastrados</h2>
-      <div id="listaAdmin"></div>
+    
+    
+          <h2>Produtos cadastrados</h2>
+    
+          <div id="listaAdmin"></div>
+    
+        </div>
+    
+      </section>
+    
+    </main>
+    
+    
+    <footer>
+    
+      <p>
+        Maré Serena © 2026 —
+        Acessórios para dias ensolarados 🌴
+      </p>
+    
+    </footer>
+    
+    
+    <!-- NOTIFICAÇÕES -->
+    
+    <div
+      id="toastContainer"
+      class="toast-container"
+      aria-live="polite"
+      aria-atomic="true">
     </div>
-  </section>
-
-</main>
-
-<footer>
-  <p>Maré Serena © 2026 — Acessórios para dias ensolarados 🌴</p>
-</footer>
-
-<script>
-  const produtosPadrao = [
-    {
-      id: 1,
-      nome: "Chapéu de palha natural",
-      categoria: "Chapéus",
-      preco: 79.90,
-      imagem: "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80",
-      descricao: "Chapéu leve e confortável para proteger você do sol.",
-      cores: ["Natural", "Bege", "Branco"],
-      modelos: ["Tradicional", "Com faixa", "Grande"]
-    },
-    {
-      id: 2,
-      nome: "Bolsa de praia colorida",
-      categoria: "Bolsas",
-      preco: 99.90,
-      imagem: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
-      descricao: "Bolsa espaçosa para levar tudo o que você precisa.",
-      cores: ["Azul", "Amarelo", "Rosa"],
-      modelos: ["Pequena", "Média", "Grande"]
-    },
-    {
-      id: 3,
-      nome: "Colar conchas do mar",
-      categoria: "Bijuterias",
-      preco: 39.90,
-      imagem: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80",
-      descricao: "Colar delicado com inspiração nas conchas do oceano.",
-      cores: ["Dourado", "Prateado", "Rose"],
-      modelos: ["Conchas pequenas", "Conchas grandes"]
-    },
-    {
-      id: 4,
-      nome: "Óculos solar pastel",
-      categoria: "Óculos",
-      preco: 69.90,
-      imagem: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
-      descricao: "Óculos moderno com armação em tom pastel.",
-      cores: ["Azul", "Amarelo", "Lilás"],
-      modelos: ["Redondo", "Quadrado", "Vintage"]
-    }
-  ];
-
-  let produtos = JSON.parse(localStorage.getItem("produtos")) || produtosPadrao;
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
-  let usuarioAtual = JSON.parse(localStorage.getItem("usuarioAtual")) || null;
-  let frete = 0;
-  let codigoPixAtual = "";
-
-  function salvarDados() {
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
-    localStorage.setItem("usuarioAtual", JSON.stringify(usuarioAtual));
-  }
-
-  function dinheiro(valor) {
-    return valor.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL"
-    });
-  }
-
-  function listaOpcoes(array) {
-    if (!array || array.length === 0) {
-      return "<option value='Único'>Único</option>";
-    }
-
-    return array.map(opcao =>
-      `<option value="${opcao}">${opcao}</option>`
-    ).join("");
-  }
-
-  function opcoesProdutoHTML(produto) {
-    const temCores = produto.cores && produto.cores.length > 0;
-    const temModelos = produto.modelos && produto.modelos.length > 0;
-
-    if (!temCores && !temModelos) return "";
-
-    return `
-      <div class="opcoes-produto">
-        ${
-          temCores
-          ? `
-            <label>
-              Cor:
-              <select id="cor-${produto.id}">
-                ${listaOpcoes(produto.cores)}
-              </select>
-            </label>
-          `
-          : ""
-        }
-
-        ${
-          temModelos
-          ? `
-            <label>
-              Modelo:
-              <select id="modelo-${produto.id}">
-                ${listaOpcoes(produto.modelos)}
-              </select>
-            </label>
-          `
-          : ""
-        }
-      </div>
-    `;
-  }
-
-  function mostrarSecao(id) {
-    document.querySelectorAll(".secao").forEach(secao => {
-      secao.classList.remove("ativa");
-    });
-
-    document.getElementById(id).classList.add("ativa");
-
-    if (id === "inicio") renderInicio();
-    if (id === "loja") renderProdutos();
-    if (id === "carrinho") renderCarrinho();
-    if (id === "checkout") renderCheckout();
-    if (id === "perfil") renderPerfil();
-    if (id === "admin") renderAdmin();
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function cardProduto(produto) {
-    return `
-      <article class="produto">
-        <img src="${produto.imagem}" alt="${produto.nome}">
-
-        <div class="produto-conteudo">
-          <small>${produto.categoria}</small>
-          <h3>${produto.nome}</h3>
-          <p>${produto.descricao}</p>
-
-          <div class="preco">${dinheiro(produto.preco)}</div>
-
-          ${opcoesProdutoHTML(produto)}
-
-          <button
-            class="botao-coral"
-            onclick="adicionarCarrinho(${produto.id})"
-          >
-            Adicionar ao carrinho
-          </button>
-        </div>
-      </article>
-    `;
-  }
-
-  function renderInicio() {
-    document.getElementById("produtosInicio").innerHTML =
-      produtos.length
-      ? produtos.map(cardProduto).join("")
-      : "<p>Nenhum produto cadastrado ainda.</p>";
-  }
-
-  function renderProdutos() {
-    const busca =
-      document.getElementById("buscaProduto")?.value.toLowerCase() || "";
-
-    const categoria =
-      document.getElementById("filtroCategoria")?.value || "";
-
-    const filtrados = produtos.filter(produto => {
-      const correspondeBusca =
-        produto.nome.toLowerCase().includes(busca) ||
-        produto.descricao.toLowerCase().includes(busca);
-
-      const correspondeCategoria =
-        !categoria || produto.categoria === categoria;
-
-      return correspondeBusca && correspondeCategoria;
-    });
-
-    document.getElementById("listaProdutos").innerHTML =
-      filtrados.length
-      ? filtrados.map(cardProduto).join("")
-      : "<p>Nenhum produto encontrado.</p>";
-  }
-
-  function adicionarCarrinho(id) {
-    const produto = produtos.find(produto => produto.id === id);
-
-    const cor =
-      document.getElementById(`cor-${id}`)?.value || "Única";
-
-    const modelo =
-      document.getElementById(`modelo-${id}`)?.value || "Único";
-
-    const itemExistente = carrinho.find(item =>
-      item.id === id &&
-      item.cor === cor &&
-      item.modelo === modelo
-    );
-
-    if (itemExistente) {
-      itemExistente.quantidade++;
-    } else {
-      carrinho.push({
-        id,
-        cor,
-        modelo,
-        quantidade: 1
-      });
-    }
-
-    salvarDados();
-    atualizarContador();
-
-    alert(
-      `${produto.nome} adicionado ao carrinho.\nCor: ${cor}\nModelo: ${modelo}`
-    );
-  }
-
-  function atualizarContador() {
-    const quantidade = carrinho.reduce(
-      (total, item) => total + item.quantidade,
-      0
-    );
-
-    document.getElementById("contadorCarrinho").textContent = quantidade;
-  }
-
-  function valorProdutos() {
-    return carrinho.reduce((total, item) => {
-      const produto = produtos.find(produto => produto.id === item.id);
-      return total + produto.preco * item.quantidade;
-    }, 0);
-  }
-
-  function renderCarrinho() {
-    const container = document.getElementById("itensCarrinho");
-
-    if (carrinho.length === 0) {
-      container.innerHTML = "<p>Seu carrinho está vazio.</p>";
-      document.getElementById("resumoCarrinho").innerHTML = "";
-      return;
-    }
-
-    container.innerHTML = carrinho.map((item, indice) => {
-      const produto = produtos.find(produto => produto.id === item.id);
-
-      return `
-        <div class="carrinho-item">
-          <img src="${produto.imagem}" alt="${produto.nome}">
-
-          <div class="carrinho-info">
-            <h3>${produto.nome}</h3>
-            <p>Cor: ${item.cor}</p>
-            <p>Modelo: ${item.modelo}</p>
-            <p>${dinheiro(produto.preco)}</p>
-          </div>
-
-          <div class="quantidade">
-            <button onclick="alterarQuantidade(${indice}, -1)">−</button>
-            <span>${item.quantidade}</span>
-            <button onclick="alterarQuantidade(${indice}, 1)">+</button>
-          </div>
-
-          <button
-            class="botao-perigo"
-            onclick="removerCarrinho(${indice})"
-          >
-            Remover
-          </button>
-        </div>
-      `;
-    }).join("");
-
-    document.getElementById("resumoCarrinho").innerHTML = `
-      <div class="resumo">
-        <div class="linha-resumo">
-          <span>Subtotal</span>
-          <strong>${dinheiro(valorProdutos())}</strong>
-        </div>
-
-        <div class="linha-resumo">
-          <span>Frete</span>
-          <strong>A calcular</strong>
-        </div>
-      </div>
-    `;
-  }
-
-  function alterarQuantidade(indice, valor) {
-    carrinho[indice].quantidade += valor;
-
-    if (carrinho[indice].quantidade <= 0) {
-      carrinho.splice(indice, 1);
-    }
-
-    salvarDados();
-    atualizarContador();
-    renderCarrinho();
-  }
-
-  function removerCarrinho(indice) {
-    carrinho.splice(indice, 1);
-    salvarDados();
-    atualizarContador();
-    renderCarrinho();
-  }
-
-  function irParaCheckout() {
-    if (carrinho.length === 0) {
-      alert("Adicione algum produto ao carrinho antes de continuar.");
-      return;
-    }
-
-    if (!usuarioAtual) {
-      alert("Faça login ou crie uma conta para continuar.");
-      mostrarSecao("login");
-      return;
-    }
-
-    document.getElementById("nomeEntrega").value = usuarioAtual.nome || "";
-    mostrarSecao("checkout");
-  }
-
-  function calcularFrete() {
-    const cep = document
-      .getElementById("cep")
-      .value
-      .replace(/\D/g, "");
-
-    if (cep.length < 8) {
-      frete = 0;
-
-      document.getElementById("informacaoFrete").textContent =
-        "Digite seu CEP completo para calcular o frete.";
-    } else {
-      const primeiroNumero = Number(cep.charAt(0));
-
-      frete =
-        primeiroNumero <= 3
-        ? 12.90
-        : primeiroNumero <= 6
-        ? 18.90
-        : 24.90;
-
-      document.getElementById("informacaoFrete").textContent =
-        `Frete calculado: ${dinheiro(frete)} — prazo estimado de 5 a 10 dias úteis.`;
-    }
-
-    gerarPix();
-    renderCheckout();
-  }
-
-  function renderCheckout() {
-    const subtotal = valorProdutos();
-    const total = subtotal + frete;
-
-    document.getElementById("resumoCheckout").innerHTML = `
-      <div class="linha-resumo">
-        <span>Produtos</span>
-        <strong>${dinheiro(subtotal)}</strong>
-      </div>
-
-      <div class="linha-resumo">
-        <span>Frete</span>
-        <strong>${dinheiro(frete)}</strong>
-      </div>
-
-      <div class="linha-resumo total">
-        <span>Total</span>
-        <strong>${dinheiro(total)}</strong>
-      </div>
-    `;
-
-    gerarPix();
-  }
-
-  function mostrarCamposPagamento() {
-    const metodo = document.querySelector(
-      "input[name='pagamento']:checked"
-    ).value;
-
-    document.getElementById("camposCartao").style.display =
-      metodo === "credito" || metodo === "debito"
-      ? "block"
-      : "none";
-
-    document.getElementById("areaPix").style.display =
-      metodo === "pix"
-      ? "block"
-      : "none";
-  }
-
-  function gerarPix() {
-    const areaPix = document.getElementById("areaPix");
-
-    if (!areaPix) return;
-
-    const metodo = document.querySelector(
-      "input[name='pagamento']:checked"
-    )?.value;
-
-    if (metodo !== "pix") return;
-
-    if (frete === 0 || carrinho.length === 0) {
-      document.getElementById("codigoPix").textContent =
-        "Preencha o endereço e informe um CEP válido para gerar o Pix.";
-
-      document.getElementById("qrcode").innerHTML = "";
-      return;
-    }
-
-    const total = valorProdutos() + frete;
-
-    /*
-      Este é um código Pix demonstrativo.
-      Para pagamentos reais, substitua por um payload
-      gerado por um gateway de pagamento.
-    */
-    codigoPixAtual =
-      `00020126580014BR.GOV.BCB.PIX0136mare.serena.pagamento520400005303986540${total.toFixed(2)}5802BR5913MARE SERENA6009SAO PAULO62070503***6304ABCD`;
-
-    document.getElementById("codigoPix").textContent = codigoPixAtual;
-
-    const qrcode = document.getElementById("qrcode");
-    qrcode.innerHTML = "";
-
-    new QRCode(qrcode, {
-      text: codigoPixAtual,
-      width: 190,
-      height: 190,
-      colorDark: "#267c91",
-      colorLight: "#ffffff"
-    });
-  }
-
-  function copiarPix() {
-    if (!codigoPixAtual) {
-      alert("Gere o código Pix primeiro.");
-      return;
-    }
-
-    navigator.clipboard.writeText(codigoPixAtual)
-      .then(() => alert("Código Pix copiado!"))
-      .catch(() => alert("Não foi possível copiar automaticamente."));
-  }
-
-  function finalizarCompra() {
-    if (carrinho.length === 0) {
-      alert("Seu carrinho está vazio.");
-      return;
-    }
-
-    const campos = [
-      "cep",
-      "numero",
-      "nomeEntrega",
-      "rua",
-      "bairro",
-      "cidade",
-      "estado"
+    
+    
+    <script>
+    
+    
+    /* =========================================================
+       PRODUTOS PADRÃO
+       ========================================================= */
+    
+    const produtosPadrao = [
+    
+      {
+        id: 1,
+    
+        nome: "Chapéu de palha natural",
+    
+        categoria: "Chapéus",
+    
+        preco: 79.90,
+    
+        imagem:
+          "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=80",
+    
+        descricao:
+          "Chapéu leve e confortável para proteger você do sol.",
+    
+        cores: [
+          "Natural",
+          "Bege",
+          "Branco"
+        ],
+    
+        modelos: [
+          "Tradicional",
+          "Com faixa",
+          "Grande"
+        ]
+      },
+    
+    
+      {
+        id: 2,
+    
+        nome: "Bolsa de praia colorida",
+    
+        categoria: "Bolsas",
+    
+        preco: 99.90,
+    
+        imagem:
+          "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
+    
+        descricao:
+          "Bolsa espaçosa para levar tudo o que você precisa.",
+    
+        cores: [
+          "Azul",
+          "Amarelo",
+          "Rosa"
+        ],
+    
+        modelos: [
+          "Pequena",
+          "Média",
+          "Grande"
+        ]
+      },
+    
+    
+      {
+        id: 3,
+    
+        nome: "Colar conchas do mar",
+    
+        categoria: "Bijuterias",
+    
+        preco: 39.90,
+    
+        imagem:
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80",
+    
+        descricao:
+          "Colar delicado com inspiração nas conchas do oceano.",
+    
+        cores: [
+          "Dourado",
+          "Prateado",
+          "Rose"
+        ],
+    
+        modelos: [
+          "Conchas pequenas",
+          "Conchas grandes"
+        ]
+      },
+    
+    
+      {
+        id: 4,
+    
+        nome: "Óculos solar pastel",
+    
+        categoria: "Óculos",
+    
+        preco: 69.90,
+    
+        imagem:
+          "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80",
+    
+        descricao:
+          "Óculos moderno com armação em tom pastel.",
+    
+        cores: [
+          "Azul",
+          "Amarelo",
+          "Lilás"
+        ],
+    
+        modelos: [
+          "Redondo",
+          "Quadrado",
+          "Vintage"
+        ]
+      }
+    
     ];
-
-    const vazio = campos.some(id =>
-      !document.getElementById(id).value.trim()
-    );
-
-    if (vazio || frete === 0) {
-      exibirMensagem(
-        "mensagemCheckout",
-        "Preencha todos os dados de entrega e informe um CEP válido.",
-        false
+    
+    
+    /* =========================================================
+       DADOS DO SITE
+       ========================================================= */
+    
+    let produtos =
+      JSON.parse(localStorage.getItem("produtos"))
+      || produtosPadrao;
+    
+    
+    let carrinho =
+      JSON.parse(localStorage.getItem("carrinho"))
+      || [];
+    
+    
+    let usuarios =
+      JSON.parse(localStorage.getItem("usuarios"))
+      || [];
+    
+    
+    let pedidos =
+      JSON.parse(localStorage.getItem("pedidos"))
+      || [];
+    
+    
+    let favoritos =
+      JSON.parse(localStorage.getItem("favoritos"))
+      || [];
+    
+    
+    let usuarioAtual =
+      JSON.parse(localStorage.getItem("usuarioAtual"))
+      || null;
+    
+    
+    let frete = 0;
+    
+    let desconto = 0;
+    
+    let codigoPixAtual = "";
+    
+    let cupomAplicado = "";
+    
+    
+    /* =========================================================
+       SALVAR DADOS
+       ========================================================= */
+    
+    function salvarDados() {
+    
+      localStorage.setItem(
+        "produtos",
+        JSON.stringify(produtos)
       );
-      return;
+    
+      localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+      );
+    
+      localStorage.setItem(
+        "usuarios",
+        JSON.stringify(usuarios)
+      );
+    
+      localStorage.setItem(
+        "pedidos",
+        JSON.stringify(pedidos)
+      );
+    
+      localStorage.setItem(
+        "favoritos",
+        JSON.stringify(favoritos)
+      );
+    
+      localStorage.setItem(
+        "usuarioAtual",
+        JSON.stringify(usuarioAtual)
+      );
+    
     }
-
-    const metodo = document.querySelector(
-      "input[name='pagamento']:checked"
-    ).value;
-
-    if (metodo !== "pix") {
-      const numeroCartao = document
-        .getElementById("numeroCartao")
-        .value
-        .replace(/\D/g, "");
-
-      if (numeroCartao.length < 13) {
+    
+    
+    /* =========================================================
+       FORMATAÇÃO DE DINHEIRO
+       ========================================================= */
+    
+    function dinheiro(valor) {
+    
+      return Number(valor).toLocaleString(
+        "pt-BR",
+        {
+          style: "currency",
+          currency: "BRL"
+        }
+      );
+    
+    }
+    
+    
+    /* =========================================================
+       SISTEMA DE NOTIFICAÇÕES
+       ========================================================= */
+    
+    function toast(texto, tipo = "sucesso") {
+    
+      const container =
+        document.getElementById("toastContainer");
+    
+    
+      const notificacao =
+        document.createElement("div");
+    
+    
+      notificacao.className =
+        "toast " + tipo;
+    
+    
+      notificacao.textContent =
+        texto;
+    
+    
+      container.appendChild(
+        notificacao
+      );
+    
+    
+      setTimeout(() => {
+    
+        notificacao.remove();
+    
+      }, 2800);
+    
+    }
+    
+    
+    /* =========================================================
+       MENSAGENS DOS FORMULÁRIOS
+       ========================================================= */
+    
+    function exibirMensagem(
+      id,
+      texto,
+      sucesso
+    ) {
+    
+      const elemento =
+        document.getElementById(id);
+    
+    
+      if (!elemento) return;
+    
+    
+      elemento.textContent =
+        texto;
+    
+    
+      elemento.className =
+        sucesso
+          ? "mensagem sucesso"
+          : "mensagem";
+    
+    
+      elemento.style.display =
+        "block";
+    
+    }
+    
+    
+    /* =========================================================
+       ESCAPAR HTML
+       ========================================================= */
+    
+    function escapeHTML(valor) {
+    
+      return String(
+        valor ?? ""
+      ).replace(
+        /[&<>"']/g,
+    
+        function (caractere) {
+    
+          return {
+    
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+    
+          }[caractere];
+    
+        }
+      );
+    
+    }
+    
+    
+    /* =========================================================
+       LISTA DE OPÇÕES
+       ========================================================= */
+    
+    function listaOpcoes(array) {
+    
+      if (array?.length) {
+    
+        return array.map(
+          opcao =>
+    
+            `<option value="${escapeHTML(opcao)}">
+              ${escapeHTML(opcao)}
+            </option>`
+    
+        ).join("");
+    
+      }
+    
+    
+      return `
+        <option value="Único">
+          Único
+        </option>
+      `;
+    
+    }
+    
+    
+    /* =========================================================
+       OPÇÕES DOS PRODUTOS
+       ========================================================= */
+    
+    function opcoesProdutoHTML(produto) {
+    
+      const possuiCores =
+        produto.cores?.length;
+    
+      const possuiModelos =
+        produto.modelos?.length;
+    
+    
+      if (!possuiCores && !possuiModelos) {
+    
+        return "";
+    
+      }
+    
+    
+      return `
+    
+        <div class="opcoes-produto">
+    
+          ${
+            possuiCores
+    
+              ? `
+    
+                <label>
+    
+                  Cor:
+    
+                  <select id="cor-${produto.id}">
+    
+                    ${listaOpcoes(produto.cores)}
+    
+                  </select>
+    
+                </label>
+    
+              `
+    
+              : ""
+          }
+    
+    
+          ${
+            possuiModelos
+    
+              ? `
+    
+                <label>
+    
+                  Modelo:
+    
+                  <select id="modelo-${produto.id}">
+    
+                    ${listaOpcoes(produto.modelos)}
+    
+                  </select>
+    
+                </label>
+    
+              `
+    
+              : ""
+          }
+    
+        </div>
+    
+      `;
+    
+    }
+    
+    
+    /* =========================================================
+       FAVORITOS
+       ========================================================= */
+    
+    function ehFavorito(id) {
+    
+      return favoritos.includes(id);
+    
+    }
+    
+    
+    function alternarFavorito(id) {
+    
+      favoritos =
+    
+        ehFavorito(id)
+    
+          ? favoritos.filter(
+              item => item !== id
+            )
+    
+          : [
+              ...favoritos,
+              id
+            ];
+    
+    
+      salvarDados();
+    
+    
+      renderInicio();
+    
+      renderProdutos();
+    
+      renderPerfil();
+    
+    
+      toast(
+    
+        ehFavorito(id)
+    
+          ? "Produto salvo nos favoritos."
+    
+          : "Produto removido dos favoritos."
+    
+      );
+    
+    }
+    
+    
+    /* =========================================================
+       CARD DO PRODUTO
+       ========================================================= */
+    
+    function cardProduto(produto) {
+    
+      return `
+    
+        <article class="produto">
+    
+          <img
+            src="${escapeHTML(produto.imagem)}"
+            alt="${escapeHTML(produto.nome)}"
+            loading="lazy"
+    
+            onerror="
+              this.src='https://placehold.co/800x500/e9fafd/267c91?text=Imagem+indisponível'
+            "
+          >
+    
+    
+          <div class="produto-conteudo">
+    
+    
+            <div
+              style="
+                display:flex;
+                justify-content:space-between;
+                gap:8px;
+              "
+            >
+    
+              <small>
+                ${escapeHTML(produto.categoria)}
+              </small>
+    
+    
+              <button
+                class="favorito"
+                title="Favoritar"
+    
+                onclick="
+                  alternarFavorito(${produto.id})
+                "
+              >
+    
+                ${
+                  ehFavorito(produto.id)
+                    ? "♥"
+                    : "♡"
+                }
+    
+              </button>
+    
+            </div>
+    
+    
+            <h3>
+              ${escapeHTML(produto.nome)}
+            </h3>
+    
+    
+            <p>
+              ${escapeHTML(produto.descricao)}
+            </p>
+    
+    
+            <div class="preco">
+    
+              ${dinheiro(produto.preco)}
+    
+            </div>
+    
+    
+            ${opcoesProdutoHTML(produto)}
+    
+    
+            <button
+              class="botao-coral"
+    
+              onclick="
+                adicionarCarrinho(${produto.id})
+              "
+            >
+    
+              Adicionar ao carrinho
+    
+            </button>
+    
+          </div>
+    
+        </article>
+    
+      `;
+    
+    }
+    
+    
+    /* =========================================================
+       RENDERIZAR INÍCIO
+       ========================================================= */
+    
+    function renderInicio() {
+    
+      const area =
+        document.getElementById(
+          "produtosInicio"
+        );
+    
+    
+      if (!produtos.length) {
+    
+        area.innerHTML = `
+          <div class="vazio">
+            Nenhum produto cadastrado ainda.
+          </div>
+        `;
+    
+        return;
+    
+      }
+    
+    
+      area.innerHTML =
+        produtos
+          .map(cardProduto)
+          .join("");
+    
+    }
+    
+    
+    /* =========================================================
+       RENDERIZAR LOJA
+       ========================================================= */
+    
+    function renderProdutos() {
+    
+      const campoBusca =
+        document.getElementById(
+          "buscaProduto"
+        );
+    
+    
+      const campoCategoria =
+        document.getElementById(
+          "filtroCategoria"
+        );
+    
+    
+      const busca =
+        campoBusca?.value
+          .toLowerCase()
+          .trim()
+          || "";
+    
+    
+      const categoria =
+        campoCategoria?.value
+        || "";
+    
+    
+      const filtrados =
+        produtos.filter(produto => {
+    
+          const texto =
+            (
+              produto.nome +
+              " " +
+              produto.descricao
+            ).toLowerCase();
+    
+    
+          return (
+    
+            texto.includes(busca)
+    
+            &&
+    
+            (
+              !categoria
+              ||
+              produto.categoria === categoria
+            )
+    
+          );
+    
+        });
+    
+    
+      const lista =
+        document.getElementById(
+          "listaProdutos"
+        );
+    
+    
+      if (!filtrados.length) {
+    
+        lista.innerHTML = `
+          <div class="vazio">
+            Nenhum produto encontrado.
+          </div>
+        `;
+    
+        return;
+    
+      }
+    
+    
+      lista.innerHTML =
+        filtrados
+          .map(cardProduto)
+          .join("");
+    
+    }
+    
+    
+    /* =========================================================
+       LIMPAR FILTROS
+       ========================================================= */
+    
+    function limparFiltros() {
+    
+      document.getElementById(
+        "buscaProduto"
+      ).value = "";
+    
+    
+      document.getElementById(
+        "filtroCategoria"
+      ).value = "";
+    
+    
+      renderProdutos();
+    
+    }
+    
+    
+    /* =========================================================
+       TROCAR DE SEÇÃO
+       ========================================================= */
+    
+    function mostrarSecao(id) {
+    
+      document
+        .querySelectorAll(".secao")
+        .forEach(secao => {
+    
+          secao.classList.remove(
+            "ativa"
+          );
+    
+        });
+    
+    
+      const alvo =
+        document.getElementById(id);
+    
+    
+      if (!alvo) return;
+    
+    
+      alvo.classList.add("ativa");
+    
+    
+      if (id === "inicio") {
+    
+        renderInicio();
+    
+      }
+    
+    
+      if (id === "loja") {
+    
+        renderProdutos();
+    
+      }
+    
+    
+      if (id === "carrinho") {
+    
+        renderCarrinho();
+    
+      }
+    
+    
+      if (id === "checkout") {
+    
+        renderCheckout();
+    
+      }
+    
+    
+      if (id === "perfil") {
+    
+        renderPerfil();
+    
+      }
+    
+    
+      if (id === "admin") {
+    
+        renderAdmin();
+    
+      }
+    
+    
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    
+    }
+    
+    
+    /* =========================================================
+       ADICIONAR PRODUTO AO CARRINHO
+       ========================================================= */
+    
+    function adicionarCarrinho(id) {
+    
+      const produto =
+        produtos.find(
+          item => item.id === id
+        );
+    
+    
+      if (!produto) {
+    
+        toast(
+          "Produto não encontrado.",
+          "erro"
+        );
+    
+        return;
+    
+      }
+    
+    
+      const campoCor =
+        document.getElementById(
+          `cor-${id}`
+        );
+    
+    
+      const campoModelo =
+        document.getElementById(
+          `modelo-${id}`
+        );
+    
+    
+      const cor =
+        campoCor?.value || "";
+    
+    
+      const modelo =
+        campoModelo?.value || "";
+    
+    
+      const existente =
+        carrinho.find(item =>
+    
+          item.id === id
+          &&
+          item.cor === cor
+          &&
+          item.modelo === modelo
+    
+        );
+    
+    
+      if (existente) {
+    
+        existente.quantidade++;
+    
+      } else {
+    
+        carrinho.push({
+    
+          id: produto.id,
+    
+          nome: produto.nome,
+    
+          preco: Number(
+            produto.preco
+          ),
+    
+          imagem: produto.imagem,
+    
+          cor: cor,
+    
+          modelo: modelo,
+    
+          quantidade: 1
+    
+        });
+    
+      }
+    
+    
+      salvarDados();
+    
+      atualizarContadorCarrinho();
+    
+      renderCarrinho();
+    
+    
+      toast(
+        `${produto.nome} foi adicionado ao carrinho!`,
+        "sucesso"
+      );
+    
+    }
+    
+    
+    /* =========================================================
+       CONTADOR DO CARRINHO
+       ========================================================= */
+    
+    function atualizarContadorCarrinho() {
+    
+      const contador =
+        document.getElementById(
+          "contadorCarrinho"
+        );
+    
+    
+      const quantidade =
+        carrinho.reduce(
+          (total, item) =>
+            total + Number(item.quantidade),
+          0
+        );
+    
+    
+      contador.textContent =
+        quantidade;
+    
+    }
+    
+    
+    /* =========================================================
+       ALTERAR QUANTIDADE
+       ========================================================= */
+    
+    function alterarQuantidade(
+      indice,
+      quantidade
+    ) {
+    
+      if (quantidade <= 0) {
+    
+        carrinho.splice(
+          indice,
+          1
+        );
+    
+      } else {
+    
+        carrinho[indice].quantidade =
+          quantidade;
+    
+      }
+    
+    
+      salvarDados();
+    
+      atualizarContadorCarrinho();
+    
+      renderCarrinho();
+    
+    }
+    
+    
+    /* =========================================================
+       REMOVER ITEM
+       ========================================================= */
+    
+    function removerCarrinho(indice) {
+    
+      carrinho.splice(
+        indice,
+        1
+      );
+    
+    
+      salvarDados();
+    
+      atualizarContadorCarrinho();
+    
+      renderCarrinho();
+    
+    
+      toast(
+        "Produto removido do carrinho."
+      );
+    
+    }
+    
+    
+    /* =========================================================
+       CALCULAR SUBTOTAL
+       ========================================================= */
+    
+    function calcularSubtotal() {
+    
+      return carrinho.reduce(
+        (total, item) =>
+    
+          total +
+          (
+            Number(item.preco)
+            *
+            Number(item.quantidade)
+          ),
+    
+        0
+      );
+    
+    }
+    
+    
+    /* =========================================================
+       RESUMO DO CARRINHO
+       ========================================================= */
+    
+    function renderCarrinho() {
+    
+      const area =
+        document.getElementById(
+          "itensCarrinho"
+        );
+    
+    
+      const resumo =
+        document.getElementById(
+          "resumoCarrinho"
+        );
+    
+    
+      if (!carrinho.length) {
+    
+        area.innerHTML = `
+          <div class="vazio">
+    
+            <h3>
+              Seu carrinho está vazio 🏖️
+            </h3>
+    
+            <p>
+              Adicione alguns produtos
+              para continuar.
+            </p>
+    
+            <button
+              class="botao-principal"
+              onclick="mostrarSecao('loja')">
+    
+              Ir para a loja
+    
+            </button>
+    
+          </div>
+        `;
+    
+    
+        resumo.innerHTML = "";
+    
+        atualizarContadorCarrinho();
+    
+        return;
+    
+      }
+    
+    
+      area.innerHTML =
+        carrinho.map(
+          (item, indice) => `
+    
+            <div class="carrinho-item">
+    
+              <img
+                src="${escapeHTML(item.imagem)}"
+                alt="${escapeHTML(item.nome)}"
+              >
+    
+    
+              <div class="carrinho-info">
+    
+                <h3>
+                  ${escapeHTML(item.nome)}
+                </h3>
+    
+    
+                ${
+                  item.cor
+                    ? `<p>Cor: ${escapeHTML(item.cor)}</p>`
+                    : ""
+                }
+    
+    
+                ${
+                  item.modelo
+                    ? `<p>Modelo: ${escapeHTML(item.modelo)}</p>`
+                    : ""
+                }
+    
+    
+                <strong>
+                  ${dinheiro(item.preco)}
+                </strong>
+    
+              </div>
+    
+    
+              <div class="quantidade">
+    
+                <button
+                  onclick="
+                    alterarQuantidade(
+                      ${indice},
+                      ${item.quantidade - 1}
+                    )
+                  "
+                >
+                  −
+                </button>
+    
+    
+                <strong>
+                  ${item.quantidade}
+                </strong>
+    
+    
+                <button
+                  onclick="
+                    alterarQuantidade(
+                      ${indice},
+                      ${item.quantidade + 1}
+                    )
+                  "
+                >
+                  +
+                </button>
+    
+              </div>
+    
+    
+              <button
+                class="botao-perigo"
+                onclick="
+                  removerCarrinho(${indice})
+                "
+              >
+    
+                Remover
+    
+              </button>
+    
+            </div>
+    
+          `
+        ).join("");
+    
+    
+      const subtotal =
+        calcularSubtotal();
+    
+    
+      resumo.innerHTML = `
+    
+        <div class="resumo">
+    
+          <div class="linha-resumo">
+    
+            <span>
+              Subtotal
+            </span>
+    
+            <strong>
+              ${dinheiro(subtotal)}
+            </strong>
+    
+          </div>
+    
+    
+          <div class="linha-resumo">
+    
+            <span>
+              Frete
+            </span>
+    
+            <strong>
+              ${dinheiro(frete)}
+            </strong>
+    
+          </div>
+    
+    
+          <div class="linha-resumo total">
+    
+            <span>
+              Total
+            </span>
+    
+            <strong>
+              ${dinheiro(
+                subtotal +
+                frete -
+                desconto
+              )}
+            </strong>
+    
+          </div>
+    
+        </div>
+    
+      `;
+    
+    
+      atualizarContadorCarrinho();
+    
+    }
+    
+    
+    /* =========================================================
+       IR PARA CHECKOUT
+       ========================================================= */
+    
+    function irParaCheckout() {
+    
+      if (!carrinho.length) {
+    
+        toast(
+          "Adicione pelo menos um produto ao carrinho.",
+          "erro"
+        );
+    
+        return;
+    
+      }
+    
+    
+      if (!usuarioAtual) {
+    
+        toast(
+          "Faça login ou crie uma conta para continuar.",
+          "erro"
+        );
+    
+    
+        setTimeout(() => {
+    
+          mostrarSecao("login");
+    
+        }, 500);
+    
+    
+        return;
+    
+      }
+    
+    
+      mostrarSecao("checkout");
+    
+    }
+    
+    
+    /* =========================================================
+       RENDERIZAR CHECKOUT
+       ========================================================= */
+    
+    function renderCheckout() {
+    
+      const resumo =
+        document.getElementById(
+          "resumoCheckout"
+        );
+    
+    
+      if (!resumo) return;
+    
+    
+      const subtotal =
+        calcularSubtotal();
+    
+    
+      const total =
+        subtotal +
+        frete -
+        desconto;
+    
+    
+      resumo.innerHTML = `
+    
+        <h3>
+          Resumo do pedido
+        </h3>
+    
+    
+        <div class="linha-resumo">
+    
+          <span>
+            Produtos
+          </span>
+    
+          <strong>
+            ${dinheiro(subtotal)}
+          </strong>
+    
+        </div>
+    
+    
+        <div class="linha-resumo">
+    
+          <span>
+            Frete
+          </span>
+    
+          <strong>
+            ${dinheiro(frete)}
+          </strong>
+    
+        </div>
+    
+    
+        ${
+          desconto > 0
+    
+            ? `
+    
+              <div class="linha-resumo">
+    
+                <span>
+                  Desconto
+                </span>
+    
+                <strong>
+                  - ${dinheiro(desconto)}
+                </strong>
+    
+              </div>
+    
+            `
+    
+            : ""
+        }
+    
+    
+        <div class="linha-resumo total">
+    
+          <span>
+            Total
+          </span>
+    
+          <strong>
+            ${dinheiro(total)}
+          </strong>
+    
+        </div>
+    
+      `;
+    
+    
+      gerarPix();
+    
+    }
+    
+    
+    /* =========================================================
+       CAMPOS DE PAGAMENTO
+       ========================================================= */
+    
+    function mostrarCamposPagamento() {
+    
+      const metodo =
+        document.querySelector(
+          'input[name="pagamento"]:checked'
+        )?.value;
+    
+    
+      const pix =
+        document.getElementById(
+          "areaPix"
+        );
+    
+    
+      const cartao =
+        document.getElementById(
+          "camposCartao"
+        );
+    
+    
+      if (metodo === "pix") {
+    
+        pix.style.display =
+          "block";
+    
+        cartao.style.display =
+          "none";
+    
+        gerarPix();
+    
+      } else {
+    
+        pix.style.display =
+          "none";
+    
+        cartao.style.display =
+          "block";
+    
+      }
+    
+    }
+    
+    
+    /* =========================================================
+       GERAR PIX DEMONSTRATIVO
+       ========================================================= */
+    
+    function gerarPix() {
+    
+      const area =
+        document.getElementById(
+          "qrcode"
+        );
+    
+    
+      const codigo =
+        document.getElementById(
+          "codigoPix"
+        );
+    
+    
+      if (!area || !codigo) return;
+    
+    
+      const subtotal =
+        calcularSubtotal();
+    
+    
+      const total =
+        subtotal +
+        frete -
+        desconto;
+    
+    
+      if (total <= 0) {
+    
+        codigo.textContent =
+          "Adicione produtos para gerar o Pix.";
+    
+        area.innerHTML = "";
+    
+        return;
+    
+      }
+    
+    
+      codigoPixAtual =
+        `00020126580014BR.GOV.BCB.PIX0136mare-serena-demo-${Date.now()}5204000053039865802BR5920MARE SERENA6009SAO PAULO62070503***6304DEMO`;
+    
+    
+      codigo.textContent =
+        codigoPixAtual;
+    
+    
+      area.innerHTML = "";
+    
+    
+      if (
+        typeof QRCode !== "undefined"
+      ) {
+    
+        new QRCode(area, {
+    
+          text: codigoPixAtual,
+    
+          width: 180,
+    
+          height: 180
+    
+        });
+    
+      }
+    
+    }
+    
+    
+    /* =========================================================
+       COPIAR PIX
+       ========================================================= */
+    
+    function copiarPix() {
+    
+      if (!codigoPixAtual) {
+    
+        toast(
+          "Gere o código Pix primeiro.",
+          "erro"
+        );
+    
+        return;
+    
+      }
+    
+    
+      navigator.clipboard
+        .writeText(codigoPixAtual)
+        .then(() => {
+    
+          toast(
+            "Código Pix copiado!"
+          );
+    
+        })
+        .catch(() => {
+    
+          toast(
+            "Não foi possível copiar automaticamente.",
+            "erro"
+          );
+    
+        });
+    
+    }
+    
+    
+    /* =========================================================
+       CEP
+       ========================================================= */
+    
+    async function consultarCEP() {
+    
+      const campoCEP =
+        document.getElementById(
+          "cep"
+        );
+    
+    
+      if (!campoCEP) return;
+    
+    
+      const cep =
+        campoCEP.value
+          .replace(/\D/g, "");
+    
+    
+      if (cep.length !== 8) {
+    
+        return;
+    
+      }
+    
+    
+      try {
+    
+        const resposta =
+          await fetch(
+            `https://viacep.com.br/ws/${cep}/json/`
+          );
+    
+    
+        const dados =
+          await resposta.json();
+    
+    
+        if (dados.erro) {
+    
+          toast(
+            "CEP não encontrado.",
+            "erro"
+          );
+    
+          return;
+    
+        }
+    
+    
+        document.getElementById(
+          "rua"
+        ).value =
+          dados.logradouro || "";
+    
+    
+        document.getElementById(
+          "bairro"
+        ).value =
+          dados.bairro || "";
+    
+    
+        document.getElementById(
+          "cidade"
+        ).value =
+          dados.localidade || "";
+    
+    
+        document.getElementById(
+          "estado"
+        ).value =
+          dados.uf || "";
+    
+    
+        /* FRETE DEMONSTRATIVO */
+    
+        frete = 15.90;
+    
+    
+        document.getElementById(
+          "informacaoFrete"
+        ).textContent =
+          "Frete calculado: " +
+          dinheiro(frete);
+    
+    
+        renderCarrinho();
+    
+        renderCheckout();
+    
+    
+        toast(
+          "Endereço encontrado!"
+        );
+    
+      }
+    
+      catch (erro) {
+    
+        frete = 15.90;
+    
+    
+        document.getElementById(
+          "informacaoFrete"
+        ).textContent =
+          "Frete estimado: " +
+          dinheiro(frete);
+    
+    
+        renderCheckout();
+    
+    
+        toast(
+          "Não foi possível consultar o CEP.",
+          "erro"
+        );
+    
+      }
+    
+    }
+    
+    
+    /* =========================================================
+       VALIDAR ENDEREÇO
+       ========================================================= */
+    
+    function validarEndereco() {
+    
+      const nome =
+        document.getElementById(
+          "nomeEntrega"
+        )?.value.trim();
+    
+    
+      const cep =
+        document.getElementById(
+          "cep"
+        )?.value.trim();
+    
+    
+      const rua =
+        document.getElementById(
+          "rua"
+        )?.value.trim();
+    
+    
+      const numero =
+        document.getElementById(
+          "numero"
+        )?.value.trim();
+    
+    
+      const bairro =
+        document.getElementById(
+          "bairro"
+        )?.value.trim();
+    
+    
+      const cidade =
+        document.getElementById(
+          "cidade"
+        )?.value.trim();
+    
+    
+      const estado =
+        document.getElementById(
+          "estado"
+        )?.value.trim();
+    
+    
+      if (
+        !nome ||
+        !cep ||
+        !rua ||
+        !numero ||
+        !bairro ||
+        !cidade ||
+        !estado
+      ) {
+    
         exibirMensagem(
           "mensagemCheckout",
-          "Digite um número de cartão válido.",
+          "Preencha todos os dados de entrega.",
           false
         );
-        return;
+    
+        toast(
+          "Preencha os dados de entrega.",
+          "erro"
+        );
+    
+        return false;
+    
       }
+    
+    
+      return true;
+    
     }
-
-    const pedido = {
-      id: "MS" + Date.now(),
-      usuario: usuarioAtual.email,
-      data: new Date().toLocaleDateString("pt-BR"),
-      itens: [...carrinho],
-      total: valorProdutos() + frete,
-      metodoPagamento: metodo,
-      status: "Pedido confirmado",
-      codigoRastreio:
-        "BR" + Math.floor(Math.random() * 900000000) + "BR"
-    };
-
-    pedidos.push(pedido);
-    carrinho = [];
-    frete = 0;
-    codigoPixAtual = "";
-
-    salvarDados();
-    atualizarContador();
-
-    exibirMensagem(
-      "mensagemCheckout",
-      `Pedido realizado com sucesso! Número do pedido: ${pedido.id}`,
-      true
-    );
-
-    setTimeout(() => mostrarSecao("perfil"), 1500);
-  }
-
-  function cadastrarUsuario() {
-    const nome = document.getElementById("cadastroNome").value.trim();
-    const email = document
-      .getElementById("cadastroEmail")
-      .value
-      .trim()
-      .toLowerCase();
-
-    const telefone = document
-      .getElementById("cadastroTelefone")
-      .value
-      .trim();
-
-    const senha = document.getElementById("cadastroSenha").value;
-
-    if (!nome || !email || !telefone || !senha) {
-      exibirMensagem(
-        "mensagemCadastro",
-        "Preencha todos os campos.",
-        false
+    
+    
+    /* =========================================================
+       VALIDAR CARTÃO
+       ========================================================= */
+    
+    function validarCartao() {
+    
+      const nome =
+        document.getElementById(
+          "nomeCartao"
+        )?.value.trim();
+    
+    
+      const numero =
+        document.getElementById(
+          "numeroCartao"
+        )?.value.replace(/\D/g, "");
+    
+    
+      const validade =
+        document.getElementById(
+          "validadeCartao"
+        )?.value.trim();
+    
+    
+      const cvv =
+        document.getElementById(
+          "cvvCartao"
+        )?.value.replace(/\D/g, "");
+    
+    
+      if (
+        !nome ||
+        !numero ||
+        numero.length < 13 ||
+        !validade ||
+        validade.length !== 5 ||
+        !cvv ||
+        cvv.length < 3
+      ) {
+    
+        toast(
+          "Preencha corretamente os dados do cartão.",
+          "erro"
+        );
+    
+        return false;
+    
+      }
+    
+    
+      return true;
+    
+    }
+    
+    
+    /* =========================================================
+       FINALIZAR COMPRA
+       ========================================================= */
+    
+    function finalizarCompra() {
+    
+      if (!usuarioAtual) {
+    
+        toast(
+          "Faça login para finalizar o pedido.",
+          "erro"
+        );
+    
+    
+        setTimeout(() => {
+    
+          mostrarSecao("login");
+    
+        }, 500);
+    
+    
+        return;
+    
+      }
+    
+    
+      if (!carrinho.length) {
+    
+        toast(
+          "Seu carrinho está vazio.",
+          "erro"
+        );
+    
+        return;
+    
+      }
+    
+    
+      if (!validarEndereco()) {
+    
+        return;
+    
+      }
+    
+    
+      const metodo =
+        document.querySelector(
+          'input[name="pagamento"]:checked'
+        )?.value;
+    
+    
+      if (
+        metodo === "credito"
+        ||
+        metodo === "debito"
+      ) {
+    
+        if (!validarCartao()) {
+    
+          return;
+    
+        }
+    
+      }
+    
+    
+      const subtotal =
+        calcularSubtotal();
+    
+    
+      const total =
+        subtotal +
+        frete -
+        desconto;
+    
+    
+      const pedido = {
+    
+        id:
+          "MS-" +
+          Date.now()
+            .toString()
+            .slice(-8),
+    
+        usuarioEmail:
+          usuarioAtual.email,
+    
+        usuarioNome:
+          usuarioAtual.nome,
+    
+        itens:
+          JSON.parse(
+            JSON.stringify(carrinho)
+          ),
+    
+        subtotal:
+          subtotal,
+    
+        frete:
+          frete,
+    
+        desconto:
+          desconto,
+    
+        total:
+          total,
+    
+        pagamento:
+          metodo,
+    
+        data:
+          new Date().toLocaleString(
+            "pt-BR"
+          ),
+    
+        status:
+          "Pagamento aprovado"
+    
+      };
+    
+    
+      pedidos.push(
+        pedido
       );
-      return;
-    }
-
-    if (usuarios.some(usuario => usuario.email === email)) {
-      exibirMensagem(
-        "mensagemCadastro",
-        "Este e-mail já está cadastrado.",
-        false
+    
+    
+      carrinho = [];
+    
+      frete = 0;
+    
+      desconto = 0;
+    
+      cupomAplicado = "";
+    
+      codigoPixAtual = "";
+    
+    
+      salvarDados();
+    
+    
+      atualizarContadorCarrinho();
+    
+      renderCarrinho();
+    
+    
+      toast(
+        `Pedido ${pedido.id} realizado com sucesso!`,
+        "sucesso"
       );
-      return;
+    
+    
+      setTimeout(() => {
+    
+        mostrarSecao("perfil");
+    
+      }, 700);
+    
     }
 
-    const usuario = {
-      nome,
-      email,
-      telefone,
-      senha
-    };
+    /* =========================================================
+   CADASTRO DE USUÁRIO
+   ========================================================= */
 
-    usuarios.push(usuario);
-    usuarioAtual = usuario;
-    salvarDados();
+function cadastrarUsuario() {
 
-    exibirMensagem(
-      "mensagemCadastro",
-      "Cadastro realizado com sucesso!",
-      true
-    );
+const nome =
+  document.getElementById(
+    "cadastroNome"
+  ).value.trim();
 
-    setTimeout(() => mostrarSecao("perfil"), 1000);
-  }
 
-  function loginUsuario() {
-    const email = document
-      .getElementById("loginEmail")
-      .value
-      .trim()
-      .toLowerCase();
+const email =
+  document.getElementById(
+    "cadastroEmail"
+  ).value.trim().toLowerCase();
 
-    const senha = document.getElementById("loginSenha").value;
 
-    const usuario = usuarios.find(usuario =>
+const telefone =
+  document.getElementById(
+    "cadastroTelefone"
+  ).value.trim();
+
+
+const senha =
+  document.getElementById(
+    "cadastroSenha"
+  ).value;
+
+
+if (
+  !nome ||
+  !email ||
+  !telefone ||
+  !senha
+) {
+
+  exibirMensagem(
+    "mensagemCadastro",
+    "Preencha todos os campos.",
+    false
+  );
+
+  toast(
+    "Preencha todos os campos.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+if (senha.length < 6) {
+
+  exibirMensagem(
+    "mensagemCadastro",
+    "A senha precisa ter pelo menos 6 caracteres.",
+    false
+  );
+
+  toast(
+    "A senha precisa ter pelo menos 6 caracteres.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+const usuarioExistente =
+  usuarios.find(
+    usuario =>
       usuario.email === email
-    );
+  );
 
-    if (!usuario) {
-      exibirMensagem(
-        "mensagemLogin",
-        "E-mail não cadastrado. Você será direcionado para a área de cadastro.",
-        false
-      );
 
-      setTimeout(() => mostrarSecao("cadastro"), 1800);
-      return;
-    }
+if (usuarioExistente) {
 
-    if (usuario.senha !== senha) {
-      exibirMensagem(
-        "mensagemLogin",
-        "Senha incorreta.",
-        false
-      );
-      return;
-    }
+  exibirMensagem(
+    "mensagemCadastro",
+    "Este e-mail já está cadastrado.",
+    false
+  );
 
-    usuarioAtual = usuario;
-    salvarDados();
+  toast(
+    "Este e-mail já está cadastrado.",
+    "erro"
+  );
 
-    exibirMensagem(
-      "mensagemLogin",
-      "Login realizado com sucesso!",
-      true
-    );
+  return;
 
-    setTimeout(() => mostrarSecao("perfil"), 800);
-  }
+}
 
-  function renderPerfil() {
-    const container = document.getElementById("conteudoPerfil");
 
-    if (!usuarioAtual) {
-      container.innerHTML = `
-        <div class="cartao">
-          <p>Você ainda não está conectado.</p>
-          <button class="botao-principal" onclick="mostrarSecao('login')">
-            Fazer login
-          </button>
-        </div>
-      `;
-      return;
-    }
+const novoUsuario = {
 
-    const meusPedidos = pedidos.filter(pedido =>
-      pedido.usuario === usuarioAtual.email
-    );
+  id:
+    Date.now(),
 
-    container.innerHTML = `
-      <div class="duas-colunas">
-        <div class="cartao">
-          <h3>Meus dados</h3>
+  nome:
+    nome,
 
-          <label>
-            Nome
-            <input id="perfilNome" value="${usuarioAtual.nome}">
-          </label>
+  email:
+    email,
 
-          <label>
-            E-mail
-            <input value="${usuarioAtual.email}" disabled>
-          </label>
+  telefone:
+    telefone,
 
-          <label>
-            Telefone
-            <input id="perfilTelefone" value="${usuarioAtual.telefone}">
-          </label>
+  senha:
+    senha,
 
-          <button class="botao-principal" onclick="salvarPerfil()">
-            Salvar alterações
-          </button>
+  criadoEm:
+    new Date().toLocaleDateString(
+      "pt-BR"
+    )
 
-          <button
-            class="botao-perigo"
-            onclick="sairConta()"
-            style="margin-top:10px;"
-          >
-            Sair da conta
-          </button>
-        </div>
+};
 
-        <div class="cartao">
-          <h3>Minhas compras</h3>
 
-          ${
-            meusPedidos.length === 0
-            ? "<p>Você ainda não realizou nenhuma compra.</p>"
-            : meusPedidos.map(pedido => `
-              <div class="pedido">
-                <strong>Pedido ${pedido.id}</strong>
-                <p>Data: ${pedido.data}</p>
-                <p>Total: ${dinheiro(pedido.total)}</p>
-                <p>Pagamento: ${pedido.metodoPagamento}</p>
-                <p>Status: ${pedido.status}</p>
-                <p>
-                  Código de rastreio:
-                  <strong>${pedido.codigoRastreio}</strong>
-                </p>
+usuarios.push(
+  novoUsuario
+);
 
-                <div class="barra-rastreio">
-                  <div></div>
-                </div>
 
-                <small>
-                  Objeto em transporte para o endereço de entrega.
-                </small>
-              </div>
-            `).join("")
-          }
-        </div>
-      </div>
-    `;
-  }
+usuarioAtual = {
+  ...novoUsuario
+};
 
-  function salvarPerfil() {
-    usuarioAtual.nome = document
-      .getElementById("perfilNome")
-      .value
-      .trim();
 
-    usuarioAtual.telefone = document
-      .getElementById("perfilTelefone")
-      .value
-      .trim();
+salvarDados();
 
-    const indice = usuarios.findIndex(usuario =>
-      usuario.email === usuarioAtual.email
-    );
+atualizarInterfaceUsuario();
 
-    usuarios[indice] = usuarioAtual;
-    salvarDados();
+limparFormularioCadastro();
 
-    alert("Dados atualizados com sucesso.");
-    renderPerfil();
-  }
 
-  function sairConta() {
-    usuarioAtual = null;
-    salvarDados();
-    alert("Você saiu da sua conta.");
-    mostrarSecao("inicio");
-  }
+exibirMensagem(
+  "mensagemCadastro",
+  "Cadastro realizado com sucesso!",
+  true
+);
 
-  function exibirMensagem(id, texto, sucesso) {
-    const elemento = document.getElementById(id);
 
-    elemento.textContent = texto;
-    elemento.className = sucesso
-      ? "mensagem sucesso"
-      : "mensagem";
+toast(
+  "Conta criada com sucesso! 🌊",
+  "sucesso"
+);
 
-    elemento.style.display = "block";
-  }
 
-  function entrarAdmin() {
-    const senha = document.getElementById("senhaAdmin").value;
+setTimeout(() => {
 
-    if (senha !== "praia123") {
-      exibirMensagem(
-        "mensagemAdmin",
-        "Senha administrativa incorreta.",
-        false
-      );
-      return;
-    }
+  mostrarSecao("perfil");
 
-    document.getElementById("loginAdmin").style.display = "none";
-    document.getElementById("painelAdmin").style.display = "block";
+}, 700);
 
-    renderAdmin();
-  }
+}
 
-  function renderAdmin() {
-    const lista = document.getElementById("listaAdmin");
 
-    if (!lista) return;
+/* =========================================================
+ LIMPAR CADASTRO
+ ========================================================= */
 
-    lista.innerHTML = produtos.map(produto => `
-      <div class="admin-produto">
-        <img src="${produto.imagem}" alt="${produto.nome}">
+function limparFormularioCadastro() {
 
-        <div>
-          <label>
-            Nome
-            <input id="nome-${produto.id}" value="${produto.nome}">
-          </label>
+document.getElementById(
+  "cadastroNome"
+).value = "";
 
-          <label>
-            Preço
-            <input
-              id="preco-${produto.id}"
-              type="number"
-              step="0.01"
-              value="${produto.preco}"
-            >
-          </label>
-        </div>
 
-        <div>
-          <label>
-            Link da imagem
-            <input id="imagem-${produto.id}" value="${produto.imagem}">
-          </label>
+document.getElementById(
+  "cadastroEmail"
+).value = "";
 
-          <label>
-            Categoria
-            <select id="categoria-${produto.id}">
-              <option ${produto.categoria === "Chapéus" ? "selected" : ""}>Chapéus</option>
-              <option ${produto.categoria === "Bolsas" ? "selected" : ""}>Bolsas</option>
-              <option ${produto.categoria === "Bijuterias" ? "selected" : ""}>Bijuterias</option>
-              <option ${produto.categoria === "Óculos" ? "selected" : ""}>Óculos</option>
-              <option ${produto.categoria === "Outros" ? "selected" : ""}>Outros</option>
-            </select>
-          </label>
-        </div>
 
-        <label>
-          Cores
-          <input
-            id="cores-${produto.id}"
-            value="${(produto.cores || []).join(", ")}"
-          >
-        </label>
+document.getElementById(
+  "cadastroTelefone"
+).value = "";
 
-        <label>
-          Modelos
-          <input
-            id="modelos-${produto.id}"
-            value="${(produto.modelos || []).join(", ")}"
-          >
-        </label>
 
-        <label>
-          Descrição
-          <textarea id="descricao-${produto.id}">${produto.descricao}</textarea>
-        </label>
+document.getElementById(
+  "cadastroSenha"
+).value = "";
+
+}
+
+
+/* =========================================================
+ LOGIN
+ ========================================================= */
+
+function loginUsuario() {
+
+const email =
+  document.getElementById(
+    "loginEmail"
+  ).value.trim().toLowerCase();
+
+
+const senha =
+  document.getElementById(
+    "loginSenha"
+  ).value;
+
+
+if (!email || !senha) {
+
+  exibirMensagem(
+    "mensagemLogin",
+    "Digite seu e-mail e sua senha.",
+    false
+  );
+
+  toast(
+    "Preencha o e-mail e a senha.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+const usuario =
+  usuarios.find(
+    item =>
+      item.email === email
+      &&
+      item.senha === senha
+  );
+
+
+if (!usuario) {
+
+  exibirMensagem(
+    "mensagemLogin",
+    "E-mail ou senha incorretos.",
+    false
+  );
+
+  toast(
+    "E-mail ou senha incorretos.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+/*
+  IMPORTANTE:
+  Agora o usuário logado é salvo
+  corretamente no localStorage.
+*/
+
+usuarioAtual = {
+  ...usuario
+};
+
+
+salvarDados();
+
+atualizarInterfaceUsuario();
+
+limparFormularioLogin();
+
+
+exibirMensagem(
+  "mensagemLogin",
+  "Login realizado com sucesso!",
+  true
+);
+
+
+toast(
+  `Bem-vindo(a), ${usuario.nome}! 🌊`,
+  "sucesso"
+);
+
+
+setTimeout(() => {
+
+  mostrarSecao("perfil");
+
+}, 700);
+
+}
+
+
+/* =========================================================
+ LIMPAR LOGIN
+ ========================================================= */
+
+function limparFormularioLogin() {
+
+document.getElementById(
+  "loginEmail"
+).value = "";
+
+
+document.getElementById(
+  "loginSenha"
+).value = "";
+
+}
+
+
+/* =========================================================
+ ATUALIZAR INTERFACE DO USUÁRIO
+ ========================================================= */
+
+function atualizarInterfaceUsuario() {
+
+const botaoLogin =
+  document.getElementById(
+    "botaoLogin"
+  );
+
+
+const botaoCadastro =
+  document.getElementById(
+    "botaoCadastro"
+  );
+
+
+const botaoSair =
+  document.getElementById(
+    "botaoSair"
+  );
+
+
+const botaoPerfil =
+  document.getElementById(
+    "botaoPerfil"
+  );
+
+
+if (usuarioAtual) {
+
+
+
+  botaoLogin.onclick =
+    function () {
+
+      mostrarSecao("perfil");
+
+    };
+
+
+  botaoCadastro.classList.add(
+    "oculto"
+  );
+
+
+  botaoSair.classList.remove(
+    "oculto"
+  );
+
+
+  botaoPerfil.classList.remove(
+    "oculto"
+  );
+
+} else {
+
+  botaoLogin.textContent =
+    "Entrar";
+
+
+  botaoLogin.onclick =
+    function () {
+
+      mostrarSecao("login");
+
+    };
+
+
+  botaoCadastro.classList.remove(
+    "oculto"
+  );
+
+
+  botaoSair.classList.add(
+    "oculto"
+  );
+
+
+  botaoPerfil.classList.remove(
+    "oculto"
+  );
+
+}
+
+}
+
+
+/* =========================================================
+ SAIR DA CONTA
+ ========================================================= */
+
+function sairConta() {
+
+usuarioAtual = null;
+
+
+salvarDados();
+
+atualizarInterfaceUsuario();
+
+renderPerfil();
+
+
+toast(
+  "Você saiu da sua conta."
+);
+
+
+setTimeout(() => {
+
+  mostrarSecao("inicio");
+
+}, 500);
+
+}
+
+
+/* =========================================================
+ PERFIL DO USUÁRIO
+ ========================================================= */
+
+function renderPerfil() {
+
+const area =
+  document.getElementById(
+    "conteudoPerfil"
+  );
+
+
+if (!area) return;
+
+
+/*
+  Se ninguém estiver logado,
+  mostramos a opção de entrar
+  ou criar uma conta.
+*/
+
+if (!usuarioAtual) {
+
+  area.innerHTML = `
+
+    <div
+      class="cartao"
+      style="
+        max-width:650px;
+        margin:auto;
+        text-align:center;
+      "
+    >
+
+      <h3>
+        Você ainda não está conectado.
+      </h3>
+
+
+      <p>
+        Entre na sua conta para
+        visualizar seus dados e pedidos.
+      </p>
+
+
+      <div class="acoes">
 
         <button
           class="botao-principal"
-          onclick="salvarProduto(${produto.id})"
+          onclick="mostrarSecao('login')"
         >
-          Salvar
+
+          Entrar
+
         </button>
+
 
         <button
-          class="botao-perigo"
-          onclick="excluirProduto(${produto.id})"
+          class="botao-coral"
+          onclick="mostrarSecao('cadastro')"
         >
-          Excluir
+
+          Criar conta
+
         </button>
+
       </div>
-    `).join("");
-  }
 
-  function converterLista(texto) {
-    return texto
-      .split(",")
-      .map(item => item.trim())
-      .filter(item => item.length > 0);
-  }
+    </div>
 
-  function adicionarProduto() {
-    const nome = document.getElementById("novoNome").value.trim();
-    const categoria = document.getElementById("novaCategoria").value;
-    const preco = Number(document.getElementById("novoPreco").value);
-    const imagem = document.getElementById("novaImagem").value.trim();
-    const descricao = document.getElementById("novaDescricao").value.trim();
+  `;
 
-    const cores = converterLista(
-      document.getElementById("novasCores").value
-    );
+  return;
 
-    const modelos = converterLista(
-      document.getElementById("novosModelos").value
-    );
+}
 
-    if (!nome || !preco || !imagem || !descricao) {
-      alert("Preencha nome, preço, imagem e descrição.");
-      return;
+
+/*
+  Procura novamente o usuário
+  dentro do array de usuários.
+
+  Isso evita problemas caso os
+  dados tenham sido atualizados.
+*/
+
+const usuarioBanco =
+  usuarios.find(
+    usuario =>
+      usuario.email ===
+      usuarioAtual.email
+  );
+
+
+const usuario =
+  usuarioBanco || usuarioAtual;
+
+
+/*
+  Pedidos somente deste usuário.
+*/
+
+const meusPedidos =
+  pedidos.filter(
+    pedido =>
+      pedido.usuarioEmail ===
+      usuario.email
+  );
+
+
+/*
+  Produtos favoritos.
+*/
+
+const meusFavoritos =
+  produtos.filter(
+    produto =>
+      favoritos.includes(
+        produto.id
+      )
+  );
+
+
+area.innerHTML = `
+
+  <div class="duas-colunas">
+
+
+    <!-- DADOS DA CONTA -->
+
+    <div class="cartao">
+
+      <h3>
+        Meus dados
+      </h3>
+
+
+      <p>
+        <strong>Nome:</strong>
+        ${escapeHTML(usuario.nome)}
+      </p>
+
+
+      <p>
+        <strong>E-mail:</strong>
+        ${escapeHTML(usuario.email)}
+      </p>
+
+
+      <p>
+        <strong>Telefone:</strong>
+        ${escapeHTML(usuario.telefone)}
+      </p>
+
+
+      <p>
+        <strong>Cadastro:</strong>
+        ${escapeHTML(usuario.criadoEm || "Não informado")}
+      </p>
+
+
+      <button
+        class="botao-perigo"
+        onclick="sairConta()"
+      >
+
+        Sair da conta
+
+      </button>
+
+    </div>
+
+
+    <!-- FAVORITOS -->
+
+    <div class="cartao">
+
+      <h3>
+        Meus favoritos ❤️
+      </h3>
+
+
+      ${
+        meusFavoritos.length
+
+          ? meusFavoritos
+              .map(
+                produto => `
+
+                  <div
+                    class="favorito"
+                    style="
+                      padding:12px;
+                      border-radius:12px;
+                    "
+                  >
+
+                    <strong>
+                      ${escapeHTML(produto.nome)}
+                    </strong>
+
+
+                    <p>
+                      ${dinheiro(produto.preco)}
+                    </p>
+
+
+                    <button
+                      onclick="
+                        alternarFavorito(
+                          ${produto.id}
+                        )
+                      "
+                    >
+
+                      Remover dos favoritos
+
+                    </button>
+
+                  </div>
+
+                `
+              )
+              .join("")
+
+          : `
+
+            <p>
+              Você ainda não possui
+              produtos favoritos.
+            </p>
+
+          `
+      }
+
+    </div>
+
+  </div>
+
+
+  <!-- PEDIDOS -->
+
+  <div class="cartao">
+
+    <h3>
+      Meus pedidos 📦
+    </h3>
+
+
+    ${
+      meusPedidos.length
+
+        ? meusPedidos
+            .slice()
+            .reverse()
+            .map(
+              pedido => `
+
+                <div class="pedido">
+
+                  <div
+                    style="
+                      display:flex;
+                      justify-content:space-between;
+                      gap:10px;
+                      flex-wrap:wrap;
+                    "
+                  >
+
+                    <strong>
+                      Pedido ${escapeHTML(pedido.id)}
+                    </strong>
+
+
+                    <span class="tag">
+                      ${escapeHTML(pedido.status)}
+                    </span>
+
+                  </div>
+
+
+                  <p>
+                    Data:
+                    ${escapeHTML(pedido.data)}
+                  </p>
+
+
+                  <p>
+                    Pagamento:
+                    ${escapeHTML(
+                      pedido.pagamento.toUpperCase()
+                    )}
+                  </p>
+
+
+                  <ul class="pedido-itens">
+
+                    ${
+                      pedido.itens
+                        .map(
+                          item => `
+
+                            <li>
+
+                              ${escapeHTML(item.nome)}
+                              ×
+                              ${item.quantidade}
+
+                              ${
+                                item.cor
+                                  ? ` — ${escapeHTML(item.cor)}`
+                                  : ""
+                              }
+
+                              ${
+                                item.modelo
+                                  ? ` — ${escapeHTML(item.modelo)}`
+                                  : ""
+                              }
+
+                            </li>
+
+                          `
+                        )
+                        .join("")
+                    }
+
+                  </ul>
+
+
+                  <div
+                    class="linha-resumo"
+                  >
+
+                    <span>
+                      Total
+                    </span>
+
+
+                    <strong>
+                      ${dinheiro(pedido.total)}
+                    </strong>
+
+                  </div>
+
+
+                  <div class="barra-rastreio">
+
+                    <div></div>
+
+                  </div>
+
+
+                  <p class="info-pequena">
+
+                    Pedido em processamento.
+                    O acompanhamento desta versão
+                    é demonstrativo.
+
+                  </p>
+
+                </div>
+
+              `
+            )
+            .join("")
+
+        : `
+
+          <div class="vazio">
+
+            <p>
+              Você ainda não fez nenhum pedido.
+            </p>
+
+
+            <button
+              class="botao-principal"
+              onclick="mostrarSecao('loja')"
+            >
+
+              Comprar agora
+
+            </button>
+
+          </div>
+
+        `
     }
 
-    produtos.push({
-      id: Date.now(),
-      nome,
-      categoria,
-      preco,
-      imagem,
-      descricao,
-      cores,
-      modelos
-    });
+  </div>
 
-    salvarDados();
-    renderAdmin();
-    renderInicio();
-    renderProdutos();
+`;
 
-    document.getElementById("novoNome").value = "";
-    document.getElementById("novoPreco").value = "";
-    document.getElementById("novaImagem").value = "";
-    document.getElementById("novaDescricao").value = "";
-    document.getElementById("novasCores").value = "";
-    document.getElementById("novosModelos").value = "";
+}
 
-    alert("Produto adicionado com sucesso.");
+
+/* =========================================================
+ ÁREA ADMINISTRATIVA
+ ========================================================= */
+
+let adminLogado = false;
+
+
+/*
+Senha demonstrativa da administração.
+
+Para um site real, isso NÃO deve ficar
+exposto no JavaScript.
+*/
+
+const SENHA_ADMIN =
+"mare123";
+
+
+function entrarAdmin() {
+
+const senha =
+  document.getElementById(
+    "senhaAdmin"
+  ).value;
+
+
+if (senha !== SENHA_ADMIN) {
+
+  exibirMensagem(
+    "mensagemAdmin",
+    "Senha administrativa incorreta.",
+    false
+  );
+
+
+  toast(
+    "Senha administrativa incorreta.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+adminLogado = true;
+
+
+document.getElementById(
+  "loginAdmin"
+).style.display =
+  "none";
+
+
+document.getElementById(
+  "painelAdmin"
+).style.display =
+  "block";
+
+
+renderAdmin();
+
+
+toast(
+  "Acesso administrativo liberado!"
+);
+
+}
+
+
+/* =========================================================
+ RENDERIZAR ADMIN
+ ========================================================= */
+
+function renderAdmin() {
+
+const painel =
+  document.getElementById(
+    "painelAdmin"
+  );
+
+
+const login =
+  document.getElementById(
+    "loginAdmin"
+  );
+
+
+if (!painel || !login) return;
+
+
+if (!adminLogado) {
+
+  painel.style.display =
+    "none";
+
+  login.style.display =
+    "block";
+
+  return;
+
+}
+
+
+painel.style.display =
+  "block";
+
+
+login.style.display =
+  "none";
+
+
+const lista =
+  document.getElementById(
+    "listaAdmin"
+  );
+
+
+if (!produtos.length) {
+
+  lista.innerHTML = `
+    <div class="vazio">
+      Nenhum produto cadastrado.
+    </div>
+  `;
+
+  return;
+
+}
+
+
+lista.innerHTML =
+  produtos
+    .map(
+      produto => `
+
+        <div class="admin-produto">
+
+          <img
+            src="${escapeHTML(produto.imagem)}"
+            alt="${escapeHTML(produto.nome)}"
+          >
+
+
+          <div>
+
+            <strong>
+              ${escapeHTML(produto.nome)}
+            </strong>
+
+
+            <p>
+              ${escapeHTML(produto.categoria)}
+            </p>
+
+
+            <strong>
+              ${dinheiro(produto.preco)}
+            </strong>
+
+          </div>
+
+
+          <div class="acoes">
+
+            <button
+              class="botao-perigo"
+              onclick="
+                excluirProduto(
+                  ${produto.id}
+                )
+              "
+            >
+
+              Excluir
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `
+    )
+    .join("");
+
+}
+
+
+/* =========================================================
+ ADICIONAR PRODUTO PELO ADMIN
+ ========================================================= */
+
+function adicionarProduto() {
+
+if (!adminLogado) {
+
+  toast(
+    "Acesse a administração primeiro.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+const nome =
+  document.getElementById(
+    "novoNome"
+  ).value.trim();
+
+
+const categoria =
+  document.getElementById(
+    "novaCategoria"
+  ).value;
+
+
+const preco =
+  Number(
+    document.getElementById(
+      "novoPreco"
+    ).value
+  );
+
+
+const imagem =
+  document.getElementById(
+    "novaImagem"
+  ).value.trim();
+
+
+const descricao =
+  document.getElementById(
+    "novaDescricao"
+  ).value.trim();
+
+
+const coresTexto =
+  document.getElementById(
+    "novasCores"
+  ).value.trim();
+
+
+const modelosTexto =
+  document.getElementById(
+    "novosModelos"
+  ).value.trim();
+
+
+if (
+  !nome ||
+  !preco ||
+  preco <= 0 ||
+  !imagem ||
+  !descricao
+) {
+
+  toast(
+    "Preencha nome, preço, imagem e descrição.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+const novoProduto = {
+
+  id:
+    Date.now(),
+
+  nome:
+    nome,
+
+  categoria:
+    categoria,
+
+  preco:
+    preco,
+
+  imagem:
+    imagem,
+
+  descricao:
+    descricao,
+
+  cores:
+    coresTexto
+      ? coresTexto
+          .split(",")
+          .map(
+            item => item.trim()
+          )
+          .filter(Boolean)
+      : [],
+
+  modelos:
+    modelosTexto
+      ? modelosTexto
+          .split(",")
+          .map(
+            item => item.trim()
+          )
+          .filter(Boolean)
+      : []
+
+};
+
+
+produtos.push(
+  novoProduto
+);
+
+
+salvarDados();
+
+limparFormularioProduto();
+
+renderAdmin();
+
+renderInicio();
+
+renderProdutos();
+
+
+toast(
+  "Produto adicionado com sucesso! 🌊"
+);
+
+}
+
+
+/* =========================================================
+ LIMPAR FORMULÁRIO DE PRODUTO
+ ========================================================= */
+
+function limparFormularioProduto() {
+
+document.getElementById(
+  "novoNome"
+).value = "";
+
+
+document.getElementById(
+  "novoPreco"
+).value = "";
+
+
+document.getElementById(
+  "novaImagem"
+).value = "";
+
+
+document.getElementById(
+  "novasCores"
+).value = "";
+
+
+document.getElementById(
+  "novosModelos"
+).value = "";
+
+
+document.getElementById(
+  "novaDescricao"
+).value = "";
+
+}
+
+
+/* =========================================================
+ EXCLUIR PRODUTO
+ ========================================================= */
+
+function excluirProduto(id) {
+
+if (!adminLogado) {
+
+  toast(
+    "Você não possui acesso administrativo.",
+    "erro"
+  );
+
+  return;
+
+}
+
+
+const produto =
+  produtos.find(
+    item => item.id === id
+  );
+
+
+if (!produto) return;
+
+
+const confirmar =
+  confirm(
+    `Deseja realmente excluir "${produto.nome}"?`
+  );
+
+
+if (!confirmar) return;
+
+
+produtos =
+  produtos.filter(
+    item => item.id !== id
+  );
+
+
+/*
+  Remove também o produto
+  do carrinho, caso esteja lá.
+*/
+
+carrinho =
+  carrinho.filter(
+    item => item.id !== id
+  );
+
+
+/*
+  Remove dos favoritos.
+*/
+
+favoritos =
+  favoritos.filter(
+    item => item !== id
+  );
+
+
+salvarDados();
+
+renderAdmin();
+
+renderInicio();
+
+renderProdutos();
+
+renderCarrinho();
+
+renderPerfil();
+
+atualizarContadorCarrinho();
+
+
+toast(
+  "Produto excluído."
+);
+
+}
+
+
+/* =========================================================
+ MÁSCARA DO CEP
+ ========================================================= */
+
+function aplicarMascaraCEP(event) {
+
+let valor =
+  event.target.value
+    .replace(/\D/g, "")
+    .slice(0, 8);
+
+
+if (valor.length > 5) {
+
+  valor =
+    valor.slice(0, 5)
+    +
+    "-"
+    +
+    valor.slice(5);
+
+}
+
+
+event.target.value =
+  valor;
+
+}
+
+
+/* =========================================================
+ MÁSCARA DO TELEFONE
+ ========================================================= */
+
+function aplicarMascaraTelefone(event) {
+
+let valor =
+  event.target.value
+    .replace(/\D/g, "")
+    .slice(0, 11);
+
+
+if (valor.length <= 10) {
+
+  if (valor.length > 6) {
+
+    valor =
+      `(${valor.slice(0,2)})
+      ${valor.slice(2,6)}
+      -${valor.slice(6)}`;
+
+  } else if (valor.length > 2) {
+
+    valor =
+      `(${valor.slice(0,2)})
+      ${valor.slice(2)}`;
+
+  } else if (valor.length > 0) {
+
+    valor =
+      `(${valor}`;
+
   }
 
-  function salvarProduto(id) {
-    const produto = produtos.find(produto => produto.id === id);
+} else {
 
-    produto.nome = document.getElementById(`nome-${id}`).value;
-    produto.preco = Number(document.getElementById(`preco-${id}`).value);
-    produto.imagem = document.getElementById(`imagem-${id}`).value;
-    produto.categoria = document.getElementById(`categoria-${id}`).value;
+  valor =
+    `(${valor.slice(0,2)})
+    ${valor.slice(2,7)}
+    -${valor.slice(7)}`;
 
-    produto.cores = converterLista(
-      document.getElementById(`cores-${id}`).value
-    );
+}
 
-    produto.modelos = converterLista(
-      document.getElementById(`modelos-${id}`).value
-    );
 
-    produto.descricao = document.getElementById(
-      `descricao-${id}`
-    ).value;
+event.target.value =
+  valor.replace(/\s+/g, " ");
 
-    salvarDados();
-    renderAdmin();
-    renderInicio();
-    renderProdutos();
+}
 
-    alert("Produto atualizado com sucesso.");
-  }
 
-  function excluirProduto(id) {
-    if (!confirm("Deseja realmente excluir este produto?")) return;
+/* =========================================================
+ MÁSCARA DO CARTÃO
+ ========================================================= */
 
-    produtos = produtos.filter(produto => produto.id !== id);
-    carrinho = carrinho.filter(item => item.id !== id);
+function aplicarMascaraCartao(event) {
 
-    salvarDados();
-    renderAdmin();
-    renderInicio();
-    renderProdutos();
-    atualizarContador();
-  }
+let valor =
+  event.target.value
+    .replace(/\D/g, "")
+    .slice(0, 16);
 
-  document.getElementById("cep").addEventListener("input", function() {
-    let valor = this.value.replace(/\D/g, "");
 
-    if (valor.length > 5) {
-      valor = valor.substring(0, 5) + "-" + valor.substring(5, 8);
+valor =
+  valor.replace(
+    /(\d{4})(?=\d)/g,
+    "$1 "
+  );
+
+
+event.target.value =
+  valor;
+
+}
+
+
+/* =========================================================
+ MÁSCARA DA VALIDADE
+ ========================================================= */
+
+function aplicarMascaraValidade(event) {
+
+let valor =
+  event.target.value
+    .replace(/\D/g, "")
+    .slice(0, 4);
+
+
+if (valor.length > 2) {
+
+  valor =
+    valor.slice(0, 2)
+    +
+    "/"
+    +
+    valor.slice(2);
+
+}
+
+
+event.target.value =
+  valor;
+
+}
+
+
+/* =========================================================
+ SOMENTE NÚMEROS
+ ========================================================= */
+
+function somenteNumeros(event) {
+
+event.target.value =
+  event.target.value
+    .replace(/\D/g, "");
+
+}
+
+
+/* =========================================================
+ EVENTOS
+ ========================================================= */
+
+document
+.getElementById("cep")
+?.addEventListener(
+  "input",
+  aplicarMascaraCEP
+);
+
+
+document
+.getElementById("cep")
+?.addEventListener(
+  "blur",
+  consultarCEP
+);
+
+
+document
+.getElementById("cadastroTelefone")
+?.addEventListener(
+  "input",
+  aplicarMascaraTelefone
+);
+
+
+document
+.getElementById("numeroCartao")
+?.addEventListener(
+  "input",
+  aplicarMascaraCartao
+);
+
+
+document
+.getElementById("validadeCartao")
+?.addEventListener(
+  "input",
+  aplicarMascaraValidade
+);
+
+
+document
+.getElementById("cvvCartao")
+?.addEventListener(
+  "input",
+  somenteNumeros
+);
+
+
+/* =========================================================
+ ENTER NO LOGIN
+ ========================================================= */
+
+document
+.getElementById("loginSenha")
+?.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Enter") {
+
+      loginUsuario();
+
     }
 
-    this.value = valor;
-    calcularFrete();
-  });
+  }
+);
 
-  document.addEventListener("DOMContentLoaded", () => {
-    renderInicio();
-    renderProdutos();
-    atualizarContador();
-    mostrarCamposPagamento();
-  });
+
+/* =========================================================
+ ENTER NO CADASTRO
+ ========================================================= */
+
+document
+.getElementById("cadastroSenha")
+?.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (event.key === "Enter") {
+
+      cadastrarUsuario();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+ INICIALIZAÇÃO DO SITE
+ ========================================================= */
+
+function iniciarSite() {
+
+atualizarContadorCarrinho();
+
+atualizarInterfaceUsuario();
+
+renderInicio();
+
+renderProdutos();
+
+renderCarrinho();
+
+renderPerfil();
+
+}
+
+
+/* =========================================================
+ INICIAR
+ ========================================================= */
+
+iniciarSite();
+
+
 </script>
 
 </body>
+
 </html>
